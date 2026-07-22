@@ -1,0 +1,51 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run all (pnpm dev)",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "pnpm dev"
+    },
+    {
+      "name": "Debug Backend .NET",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "dotnet",
+      "args": ["run", "--project", "${workspaceFolder}/backend/SMToolsBackend.csproj"],
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      }
+    },
+    {
+      "name": "Start Frontend Dev Server",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "pnpm dev:frontend"
+    },
+    {
+      "name": "Debug Frontend Chrome",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:8080",
+      "webRoot": "${workspaceFolder}/frontend"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Debug Full Stack",
+      "configurations": [
+        "Debug Backend .NET",
+        "Start Frontend Dev Server",
+        "Debug Frontend Chrome"
+      ],
+      "preLaunchTask": "docker-up",
+      "stopAll": true
+    }
+  ]
+}

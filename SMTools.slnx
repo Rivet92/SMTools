@@ -1,0 +1,15 @@
+<Solution>
+  <Folder Name="/backend/" />
+  <Folder Name="/backend/src/">
+    <Project Path="backend/src/SMTools.Abstractions/SMTools.Abstractions.csproj" />
+    <Project Path="backend/src/SMTools.Api/SMTools.Api.csproj" />
+    <Project Path="backend/src/SMTools.Identity/SMTools.Identity.csproj" />
+    <Project Path="backend/src/SMTools.Kanban/SMTools.Kanban.csproj" />
+    <Project Path="backend/src/SMTools.Notes/SMTools.Notes.csproj" />
+    <Project Path="backend/src/SMTools.PlanningPoker/SMTools.PlanningPoker.csproj" />
+    <Project Path="backend/src/SMTools.Retro/SMTools.Retro.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/SMToolsBackend.Tests/SMToolsBackend.Tests.csproj" />
+  </Folder>
+</Solution>

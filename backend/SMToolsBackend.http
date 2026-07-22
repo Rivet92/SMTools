@@ -1,0 +1,6 @@
+@SMToolsBackend_HostAddress = http://localhost:5125
+
+GET {{SMToolsBackend_HostAddress}}/api/planningpoker/decks
+Accept: application/json
+
+###

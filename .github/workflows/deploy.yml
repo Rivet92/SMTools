@@ -1,0 +1,111 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches: [main]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  verify-backend:
+    uses: ./.github/workflows/verify-backend.yml
+
+  verify-frontend:
+    uses: ./.github/workflows/verify-frontend.yml
+
+  build-and-push:
+    needs: [verify-backend, verify-frontend]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      security-events: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # pin@v4
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9  # pin@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@ca877d9245402d1537745e0e356eab47c3520991  # pin@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          labels: |
+            org.opencontainers.image.source=${{ github.repository }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Scan Docker image for vulnerabilities
+        uses: aquasecurity/trivy-action@18f2510ee396bbf400402947b394f2dd8c87dbb0  # pin@master
+        with:
+          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Upload Trivy results to GitHub Security
+        uses: github/codeql-action/upload-sarif@f09c1c0a94de965c15400f5634aa42fac8fb8f88  # pin@v3
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # pin@v4
+        with:
+          fetch-depth: 2
+
+      - name: Get previous deployment tag
+        id: prev-deploy
+        run: |
+          PREVIOUS_SHA=$(git rev-parse HEAD~1)
+          echo "tag=$PREVIOUS_SHA" >> $GITHUB_OUTPUT
+
+      - name: Add VPS to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to VPS via SSH
+        uses: appleboy/ssh-action@0ff4204d59e8e51228ff73bce53f80d53301dee2  # pin@v1
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            cd /opt/smtools
+            docker compose pull app
+            docker compose up -d --force-recreate app
+            docker image prune -af --filter "until=24h" --filter "label=org.opencontainers.image.source=${{ github.repository }}"
+
+      - name: Wait for health check
+        run: |
+          ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} \
+            "for i in \$(seq 1 12); do sleep 10; if curl -sf http://localhost:8080/health/ready > /dev/null 2>&1; then echo 'Health check passed'; exit 0; fi; done; echo 'Health check failed'; exit 1"
+
+      - name: Rollback on failure
+        if: failure()
+        uses: appleboy/ssh-action@0ff4204d59e8e51228ff73bce53f80d53301dee2  # pin@v1
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            cd /opt/smtools
+            PREVIOUS_TAG="${{ steps.prev-deploy.outputs.tag }}"
+            if docker image inspect ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$PREVIOUS_TAG > /dev/null 2>&1; then
+              docker compose stop app
+              docker tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$PREVIOUS_TAG ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+              docker compose up -d --force-recreate app
+            fi

@@ -1,0 +1,36 @@
+tests/
+backups/
+scripts/
+.github/
+.git/
+*.md
+.gitignore
+.dockerignore
+.env
+.env.example
+
+# Dependencies
+node_modules
+frontend/node_modules
+
+# Build outputs
+frontend/dist
+backend/bin
+backend/obj
+
+# Local data
+postgres-data
+
+# IDE
+.vscode
+.idea
+backend/.vs
+*.user
+
+# Logs
+*.log
+logs
+
+# Cache
+frontend/node_modules/.cache
+.pnpm-store

@@ -1,0 +1,51 @@
+{
+  "name": "smtools",
+  "private": true,
+  "version": "1.0.0",
+  "description": "SMTools monorepo",
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "scripts": {
+    "dev": "docker compose up -d && concurrently -n BACKEND,FRONTEND -c yellow,green \"pnpm dev:backend\" \"pnpm dev:frontend\"",
+    "dev:backend": "dotnet watch --project backend/src/SMTools.Api/SMTools.Api.csproj",
+    "dev:frontend": "pnpm --filter frontend dev",
+    "dev:db": "docker compose up -d db",
+    "down": "docker compose down",
+    "lint": "pnpm --filter frontend lint",
+    "typecheck": "pnpm --filter frontend typecheck",
+    "format:check": "dotnet format backend/src/SMTools.Api/SMTools.Api.csproj --verify-no-changes",
+    "format:fix": "dotnet format backend/src/SMTools.Api/SMTools.Api.csproj",
+    "test:backend": "dotnet test tests/SMToolsBackend.Tests/SMToolsBackend.Tests.csproj",
+    "test:frontend": "pnpm --filter frontend test",
+    "test:e2e": "pnpm --filter frontend test:e2e",
+    "test:e2e:ui": "pnpm --filter frontend test:e2e:ui",
+    "test": "pnpm test:backend && pnpm test:frontend",
+    "test:coverage": "bash scripts/coverage.sh",
+    "test:backend:watch": "dotnet watch test tests/SMToolsBackend.Tests/SMToolsBackend.Tests.csproj",
+    "build:backend": "dotnet publish backend/src/SMTools.Api/SMTools.Api.csproj -c Release -o backend/publish",
+    "kill:ports": "fuser -k 5125/tcp 8080/tcp 2>/dev/null; echo 'Ports 5125 and 8080 freed'",
+    "clean": "pnpm -r exec rm -rf dist node_modules .turbo",
+    "docker:build": "docker build -t smtools:latest .",
+    "docker:build:base": "docker build -t smtools:latest --build-arg BASE_URL=${BASE_URL:-/app} .",
+    "docker:run": "docker run --env-file .env -p 8080:8080 smtools:latest",
+    "db:add-migration": "dotnet ef migrations add --startup-project backend/src/SMTools.Api/SMTools.Api.csproj --project backend/src/SMTools.Api/SMTools.Api.csproj",
+    "db:add-migration:identity": "dotnet ef migrations add --startup-project backend/src/SMTools.Api/SMTools.Api.csproj --project backend/src/SMTools.Identity/SMTools.Identity.csproj --context IdentityDbContext --output-dir Data/Migrations",
+    "db:add-migration:notes": "dotnet ef migrations add --startup-project backend/src/SMTools.Api/SMTools.Api.csproj --project backend/src/SMTools.Notes/SMTools.Notes.csproj --context NotesDbContext --output-dir Data/Migrations",
+    "db:add-migration:pp": "dotnet ef migrations add --startup-project backend/src/SMTools.Api/SMTools.Api.csproj --project backend/src/SMTools.PlanningPoker/SMTools.PlanningPoker.csproj --context PlanningPokerDbContext --output-dir Data/Migrations",
+    "db:add-migration:retro": "dotnet ef migrations add --startup-project backend/src/SMTools.Api/SMTools.Api.csproj --project backend/src/SMTools.Retro/SMTools.Retro.csproj --context RetroDbContext --output-dir Data/Migrations",
+    "db:add-migration:kanban": "dotnet ef migrations add --startup-project backend/src/SMTools.Api/SMTools.Api.csproj --project backend/src/SMTools.Kanban/SMTools.Kanban.csproj --context KanbanDbContext --output-dir Data/Migrations",
+    "db:update": "dotnet ef database update --project backend/src/SMTools.Api/SMTools.Api.csproj"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "pnpm": {
+    "overrides": {
+      "react": "^19.2.7",
+      "react-dom": "^19.2.7"
+    }
+  }
+}
