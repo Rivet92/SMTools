@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify-backend:
+    uses: ./.github/workflows/verify-backend.yml
+
+  verify-frontend:
+    uses: ./.github/workflows/verify-frontend.yml
+
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # pin@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9  # pin@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1  # pin@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020  # pin@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+
+      - name: Restore backend
+        run: dotnet restore backend/src/SMTools.Api/SMTools.Api.csproj
+
+      - name: Dump OpenAPI (DB-less Testing env)
+        env:
+          ASPNETCORE_ENVIRONMENT: Testing
+        run: dotnet run --project backend/src/SMTools.Api/SMTools.Api.csproj --configuration Release -- --dump-openapi=openapi.snapshot.json
+
+      - name: Install frontend deps
+        run: pnpm --filter frontend install --frozen-lockfile
+
+      - name: Regenerate api.ts
+        run: pnpm --filter frontend generate-types
+
+      - name: Fail if drift
+        run: git diff --exit-code frontend/src/types/generated/api.ts
+
+  analyze:
+    name: CodeQL Analyze
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # pin@v4
+      - uses: github/codeql-action/init@f09c1c0a94de965c15400f5634aa42fac8fb8f88  # pin@v3
+        with:
+          languages: csharp, javascript-typescript
+      - uses: github/codeql-action/analyze@f09c1c0a94de965c15400f5634aa42fac8fb8f88  # pin@v3

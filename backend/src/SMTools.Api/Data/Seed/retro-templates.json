@@ -1,0 +1,40 @@
+[
+  {
+    "key": "mad-sad-glad",
+    "isDefault": true,
+    "columns": [
+      { "key": "mad", "displayOrder": 1, "color": "#ef4444", "icon": "MoodAngry" },
+      { "key": "sad", "displayOrder": 2, "color": "#f97316", "icon": "MoodSad" },
+      { "key": "glad", "displayOrder": 3, "color": "#22c55e", "icon": "MoodHappy" }
+    ]
+  },
+  {
+    "key": "4l",
+    "isDefault": false,
+    "columns": [
+      { "key": "liked", "displayOrder": 1, "color": "#22c55e", "icon": "ThumbUp" },
+      { "key": "learned", "displayOrder": 2, "color": "#3b82f6", "icon": "Book" },
+      { "key": "lacked", "displayOrder": 3, "color": "#eab308", "icon": "AlertCircle" },
+      { "key": "longed-for", "displayOrder": 4, "color": "#0ea5e9", "icon": "Sparkles" }
+    ]
+  },
+  {
+    "key": "start-stop-continue",
+    "isDefault": false,
+    "columns": [
+      { "key": "start", "displayOrder": 1, "color": "#22c55e", "icon": "PlayerPlay" },
+      { "key": "stop", "displayOrder": 2, "color": "#ef4444", "icon": "PlayerStop" },
+      { "key": "continue", "displayOrder": 3, "color": "#3b82f6", "icon": "PlayerTrackNext" }
+    ]
+  },
+  {
+    "key": "sailboat",
+    "isDefault": false,
+    "columns": [
+      { "key": "wind", "displayOrder": 1, "color": "#22c55e", "icon": "Wind" },
+      { "key": "anchor", "displayOrder": 2, "color": "#eab308", "icon": "Anchor" },
+      { "key": "rocks", "displayOrder": 3, "color": "#ef4444", "icon": "AlertTriangle" },
+      { "key": "island", "displayOrder": 4, "color": "#3b82f6", "icon": "MapPin" }
+    ]
+  }
+]

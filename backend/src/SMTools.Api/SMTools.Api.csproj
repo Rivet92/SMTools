@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <AnalysisMode>Recommended</AnalysisMode>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <DebugType>none</DebugType>
+    <InternalsVisibleTo>SMToolsBackend.Tests</InternalsVisibleTo>
+    <NoWarn>$(NoWarn);AD0001</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+    <PackageReference Include="Microsoft.OpenApi" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" />
+    <PackageReference Include="SixLabors.ImageSharp" />
+    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
+    <PackageReference Include="Scalar.AspNetCore" />
+    <PackageReference Include="Serilog.AspNetCore" />
+    <PackageReference Include="Serilog.Formatting.Compact" />
+    <PackageReference Include="Serilog.Sinks.Console" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SMTools.Abstractions\SMTools.Abstractions.csproj" />
+    <ProjectReference Include="..\SMTools.Identity\SMTools.Identity.csproj" />
+    <ProjectReference Include="..\SMTools.Notes\SMTools.Notes.csproj" />
+    <ProjectReference Include="..\SMTools.PlanningPoker\SMTools.PlanningPoker.csproj" />
+    <ProjectReference Include="..\SMTools.Retro\SMTools.Retro.csproj" />
+    <ProjectReference Include="..\SMTools.Kanban\SMTools.Kanban.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Data\Seed\*.json" />
+  </ItemGroup>
+
+</Project>

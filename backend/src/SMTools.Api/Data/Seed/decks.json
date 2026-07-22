@@ -1,0 +1,52 @@
+[
+  {
+    "key": "fibonacci-sprint",
+    "isDefault": true,
+    "cards": [
+      { "value": "1", "displayOrder": 1 },
+      { "value": "2", "displayOrder": 2 },
+      { "value": "3", "displayOrder": 3 },
+      { "value": "5", "displayOrder": 4 },
+      { "value": "8", "displayOrder": 5 },
+      { "value": "13", "displayOrder": 6 },
+      { "value": "21", "displayOrder": 7 },
+      { "value": "34", "displayOrder": 8 },
+      { "value": "55", "displayOrder": 9 },
+      { "value": "89", "displayOrder": 10 },
+      { "value": "?", "displayOrder": 11 },
+      { "value": "\u2615", "displayOrder": 12 }
+    ]
+  },
+  {
+    "key": "fibonacci-pip",
+    "isDefault": false,
+    "cards": [
+      { "value": "5", "displayOrder": 1 },
+      { "value": "8", "displayOrder": 2 },
+      { "value": "13", "displayOrder": 3 },
+      { "value": "21", "displayOrder": 4 },
+      { "value": "34", "displayOrder": 5 },
+      { "value": "55", "displayOrder": 6 },
+      { "value": "89", "displayOrder": 7 },
+      { "value": "144", "displayOrder": 8 },
+      { "value": "233", "displayOrder": 9 },
+      { "value": "?", "displayOrder": 10 },
+      { "value": "\u2615", "displayOrder": 11 }
+    ]
+  },
+  {
+    "key": "tshirt-sizes",
+    "isDefault": false,
+    "cards": [
+      { "value": "XS", "displayOrder": 1 },
+      { "value": "S", "displayOrder": 2 },
+      { "value": "M", "displayOrder": 3 },
+      { "value": "L", "displayOrder": 4 },
+      { "value": "XL", "displayOrder": 5 },
+      { "value": "2XL", "displayOrder": 6 },
+      { "value": "3XL", "displayOrder": 7 },
+      { "value": "?", "displayOrder": 8 },
+      { "value": "\u2615", "displayOrder": 9 }
+    ]
+  }
+]

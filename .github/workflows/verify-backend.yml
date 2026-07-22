@@ -1,0 +1,67 @@
+name: Verify Backend
+
+on:
+  workflow_call:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_DB: smtools_test
+          POSTGRES_USER: smtools
+          POSTGRES_PASSWORD: smtools
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # pin@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9  # pin@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Cache NuGet packages
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830  # pin@v4.3.0
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', '**/Directory.Packages.props') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore
+
+      - name: Check NuGet vulnerabilities
+        run: dotnet list package --vulnerable --include-transitive 2>&1 | tee nuget-vulns.txt && if grep -qi "vulnerability" nuget-vulns.txt; then echo "Vulnerabilities found!"; cat nuget-vulns.txt; exit 1; fi
+
+      - name: Check formatting
+        run: dotnet format SMTools.slnx --verify-no-changes
+
+      - name: Run tests with coverage
+        run: dotnet test tests/SMToolsBackend.Tests/SMToolsBackend.Tests.csproj --no-restore --no-build --collect:"XPlat Code Coverage" --results-directory ./TestResults --settings tests/SMToolsBackend.Tests/.runsettings
+        env:
+          ConnectionStrings__DefaultConnection: Host=localhost;Port=5432;Database=smtools_test;Username=smtools;Password=smtools
+
+      - name: Upload coverage artifact
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4  # pin@v5
+        with:
+          name: backend-coverage
+          path: ./TestResults/**/coverage.cobertura.xml
+
+      - name: Upload to Codecov
+        uses: codecov/codecov-action@f2274c2c340e0c81c8f7dc407b2a477b8935f171  # pin@v6
+        with:
+          files: ./TestResults/**/coverage.cobertura.xml
+          flags: backend
+          fail_ci_if_error: true
