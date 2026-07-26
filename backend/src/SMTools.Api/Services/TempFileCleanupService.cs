@@ -1,12 +1,22 @@
-#pragma warning disable CA1848 // Not performance-critical — runs every 30 minutes
+using Microsoft.Extensions.Logging;
 
 namespace SMTools.Api.Services;
 
-public sealed class TempFileCleanupService : BackgroundService
+public sealed partial class TempFileCleanupService : BackgroundService
 {
-    private readonly ILogger<TempFileCleanupService> _logger;
     private static readonly TimeSpan CleanupInterval = TimeSpan.FromMinutes(30);
     private static readonly TimeSpan MaxAge = TimeSpan.FromHours(1);
+
+    [LoggerMessage(Level = LogLevel.Information, Message = "Cleaned up stale export temp dir: {Dir}")]
+    private partial void LogCleanedUp(string dir);
+
+    [LoggerMessage(Level = LogLevel.Warning, Message = "Failed to clean up temp dir: {Dir}")]
+    private partial void LogFailed(string dir, Exception ex);
+
+    [LoggerMessage(Level = LogLevel.Warning, Message = "Error cleaning up stale export temp directories")]
+    private partial void LogCleanupError(Exception ex);
+
+    private readonly ILogger<TempFileCleanupService> _logger;
 
     public TempFileCleanupService(ILogger<TempFileCleanupService> logger)
     {
@@ -25,7 +35,7 @@ public sealed class TempFileCleanupService : BackgroundService
             }
             catch (Exception ex)
             {
-                _logger.LogWarning(ex, "Error cleaning up stale export temp directories");
+                LogCleanupError(ex);
             }
 
             await Task.Delay(CleanupInterval, stoppingToken);
@@ -45,12 +55,12 @@ public sealed class TempFileCleanupService : BackgroundService
                 if (created < cutoff)
                 {
                     Directory.Delete(dir, recursive: true);
-                    _logger.LogInformation("Cleaned up stale export temp dir: {Dir}", dir);
+                    LogCleanedUp(dir);
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogWarning(ex, "Failed to clean up temp dir: {Dir}", dir);
+                LogFailed(dir, ex);
             }
         }
     }

@@ -9,11 +9,9 @@ public static class MiddlewareExtensions
 {
     public static IApplicationBuilder UseApplicationMiddleware(this IApplicationBuilder app, IWebHostEnvironment environment)
     {
-        app.UseForwardedHeaders(new ForwardedHeadersOptions
-        {
-            ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost,
-            KnownProxies = { IPAddress.Loopback, IPAddress.IPv6Loopback },
-        });
+        // Restore the original scheme from the reverse proxy before any middleware
+        // that inspects the request (authentication, CSRF, redirects, etc.).
+        app.UseForwardedHeaders();
 
         if (!environment.IsDevelopment())
         {
