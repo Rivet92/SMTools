@@ -142,7 +142,7 @@ export function KanbanBoardPage() {
           <Box
             sx={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', py: 6 }}
           >
-            <Stack alignItems="center" spacing={2}>
+            <Stack spacing={2} sx={{ alignItems: 'center' }}>
               <IconSettings size={48} stroke={1} />
               <Typography variant="h6" color="text.secondary">
                 {t('kanban.noColumns')}

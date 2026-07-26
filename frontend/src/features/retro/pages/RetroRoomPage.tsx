@@ -70,7 +70,7 @@ export function RetroRoomPage() {
 
   if (!room || !template) {
     return (
-      <Box display="flex" justifyContent="center" py={6}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', py: 6 }}>
         <CircularProgress />
       </Box>
     );

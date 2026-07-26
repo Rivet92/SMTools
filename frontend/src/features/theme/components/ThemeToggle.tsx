@@ -18,7 +18,7 @@ export function ThemeToggle({ showLabel = true, menuItem = false, sx }: ThemeTog
   const label = isLight ? t('theme.darkMode') : t('theme.lightMode');
 
   const content = (
-    <Stack direction="row" spacing={1} alignItems="center">
+    <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
       {isLight ? <IconMoon size={20} /> : <IconSun size={20} />}
       {showLabel && (
         <Typography variant="body2" component="span" sx={{ display: { xs: 'none', sm: 'inline' } }}>

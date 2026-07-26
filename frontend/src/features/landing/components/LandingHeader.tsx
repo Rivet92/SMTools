@@ -4,7 +4,7 @@ import { ThemeToggle } from '../../theme/components/ThemeToggle';
 
 export function LandingHeader() {
   return (
-    <Stack direction="row" spacing={2} alignItems="center">
+    <Stack direction="row" spacing={2} sx={{ alignItems: 'center' }}>
       <LanguageSelector compact />
       <ThemeToggle />
     </Stack>

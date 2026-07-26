@@ -49,7 +49,7 @@ export function RoomListFilters({
 }: RoomListFiltersProps) {
   return (
     <Box>
-      <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1.5 }}>
+      <Stack direction="row" spacing={1} sx={{ alignItems: 'center', mb: 1.5 }}>
         <TextField
           placeholder={labels.searchPlaceholder}
           value={search}
@@ -78,7 +78,7 @@ export function RoomListFilters({
 
       <Collapse in={showFilters}>
         <Paper variant="outlined" sx={{ p: 1.5, mb: 1.5 }}>
-          <Stack direction="row" spacing={2} alignItems="center" flexWrap="wrap" useFlexGap>
+          <Stack direction="row" spacing={2} sx={{ alignItems: 'center', flexWrap: 'wrap' }} useFlexGap>
             <TextField
               label={labels.fromDate}
               type="date"

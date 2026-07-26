@@ -95,8 +95,10 @@ export function ColumnList({
                     )}
                   </Box>
                 }
-                primaryTypographyProps={{ noWrap: true }}
-                secondaryTypographyProps={{ component: 'div' }}
+                slotProps={{
+                  primary: { sx: { whiteSpace: 'nowrap' } },
+                  secondary: { component: 'div' },
+                }}
               />
             </ListItemButton>
           </ListItem>

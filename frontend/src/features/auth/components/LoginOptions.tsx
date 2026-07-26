@@ -15,8 +15,8 @@ export function LoginOptions({ returnUrl = '/' }: LoginOptionsProps) {
   };
 
   return (
-    <Stack spacing={3} alignItems="center" width="100%" maxWidth={360}>
-      <Stack spacing={2} width="100%">
+    <Stack spacing={3} sx={{ alignItems: 'center', width: '100%', maxWidth: 360 }}>
+      <Stack spacing={2} sx={{ width: '100%' }}>
         <Button
           variant="outlined"
           startIcon={<img src="/google-social-icon.svg" alt="" width={20} height={20} />}

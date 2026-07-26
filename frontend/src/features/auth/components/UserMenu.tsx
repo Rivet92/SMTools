@@ -61,7 +61,7 @@ export function UserMenu() {
         slotProps={{ paper: { sx: { mt: 1 } } }}
       >
         <MenuItem disabled sx={{ opacity: '1 !important' }}>
-          <Typography variant="body2" noWrap maxWidth={220}>
+          <Typography variant="body2" sx={{ whiteSpace: 'nowrap', maxWidth: 220 }}>
             {user?.name}
           </Typography>
         </MenuItem>

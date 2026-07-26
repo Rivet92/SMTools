@@ -71,7 +71,7 @@ export function RoomListTable({
           py: 6,
         }}
       >
-        <Stack alignItems="center" spacing={2}>
+        <Stack spacing={2} sx={{ alignItems: 'center' }}>
           {emptyIcon}
           <Typography variant="h6" color="text.secondary">
             {emptyText}
@@ -128,7 +128,7 @@ export function RoomListTable({
                   }}
                   onClick={onRoomClick ? () => onRoomClick(room.id) : undefined}
                 >
-                  <Typography variant="body2" fontWeight={600} noWrap sx={{ fontSize: '1rem' }}>
+                  <Typography variant="body2" sx={{ fontWeight: 600, fontSize: '1rem', whiteSpace: 'nowrap' }}>
                     {room.title}
                   </Typography>
                   {room.isOwner && (
@@ -148,7 +148,7 @@ export function RoomListTable({
                 </Box>
               </TableCell>
               <TableCell sx={{ py: 1, whiteSpace: 'nowrap', width: 0 }} align="right">
-                <Stack direction="row" spacing={0.5} justifyContent="flex-end">
+                <Stack direction="row" spacing={0.5} sx={{ justifyContent: 'flex-end' }}>
                   {renderActions(room)}
                 </Stack>
               </TableCell>

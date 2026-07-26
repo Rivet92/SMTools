@@ -15,7 +15,7 @@ export function LanguageSelector({ compact = false }: LanguageSelectorProps) {
   }
 
   return (
-    <Box mb={compact ? 0 : 3}>
+    <Box sx={{ mb: compact ? 0 : 3 }}>
       <FormControl size="small" sx={{ minWidth: { xs: 90, sm: compact ? 140 : 180 } }}>
         <InputLabel id="language-selector-label">{t('language.selector')}</InputLabel>
         <Select

@@ -84,7 +84,7 @@ export function CardsSummaryTable({
                     flexShrink: 0,
                   }}
                 />
-                <Typography variant="subtitle2" fontWeight={600}>
+                <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
                   {t(getRetroColumnNameKey(templateKey, column.key))}
                 </Typography>
               </Box>

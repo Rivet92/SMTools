@@ -64,8 +64,8 @@ export const KanbanCardItem = memo(function KanbanCardItem({
       <CardContent sx={{ p: 1, '&:last-child': { pb: 1 } }}>
         <Typography
           variant="body2"
-          fontWeight={600}
           sx={{
+            fontWeight: 600,
             wordBreak: 'break-word',
             ...(canEdit
               ? {

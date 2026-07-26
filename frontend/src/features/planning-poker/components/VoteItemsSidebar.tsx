@@ -63,7 +63,7 @@ export const VoteItemsSidebar = memo(function VoteItemsSidebar({
         flexDirection: 'column',
       }}
     >
-      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 1 }}>
+      <Stack direction="row" sx={{ alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
         <Typography variant="h6" sx={{ color: 'text.secondary' }}>
           {t('planningPoker.voteItems')}
         </Typography>
@@ -99,11 +99,11 @@ export const VoteItemsSidebar = memo(function VoteItemsSidebar({
                 onClick={() => onSelectItem(item.id)}
               >
                 <CardContent sx={{ py: 1, '&:last-child': { pb: 1 } }}>
-                  <Stack direction="column" spacing={1} alignItems="flex-start">
-                    <Typography variant="body2" fontWeight={500} sx={{ flex: 1, minWidth: 0 }}>
+                    <Stack direction="column" spacing={1} sx={{ alignItems: 'flex-start' }}>
+                      <Typography variant="body2" sx={{ fontWeight: 500, flex: 1, minWidth: 0 }}>
                       {item.title}
                     </Typography>
-                    <Stack direction="row" alignItems="flex-start" sx={{ width: '100%' }}>
+                      <Stack direction="row" sx={{ alignItems: 'flex-start', width: '100%' }}>
                       <Box>{item.isRevealed && <RevealedVoteChip votes={item.votes} />}</Box>
                       <Box sx={{ ml: 'auto' }}>
                         {canManage && (
@@ -172,7 +172,7 @@ export const VoteItemsSidebar = memo(function VoteItemsSidebar({
           {t('planningPoker.deleteItemConfirm')}
         </Typography>
         {itemToDelete && (
-          <Typography variant="body2" fontWeight={500} sx={{ mt: 1 }}>
+          <Typography variant="body2" sx={{ fontWeight: 500, mt: 1 }}>
             {itemToDelete.title}
           </Typography>
         )}

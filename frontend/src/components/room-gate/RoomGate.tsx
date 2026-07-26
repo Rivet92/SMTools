@@ -74,7 +74,7 @@ export function RoomGate<TState extends RoomStateBase>({
             gap: 2,
           }}
         >
-          <Typography variant="h4" component="h1" fontWeight={700}>
+          <Typography variant="h4" component="h1" sx={{ fontWeight: 700 }}>
             {t('notFound.title')}
           </Typography>
           <Typography variant="body1" color="text.secondary">

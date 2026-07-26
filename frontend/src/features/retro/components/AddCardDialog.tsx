@@ -28,9 +28,7 @@ export function AddCardDialog({
       open={open}
       onClose={onClose}
       title={t('retro.addCard')}
-      TransitionProps={{
-        onEntered: () => inputRef.current?.focus(),
-      }}
+      TransitionProps={{ onEntered: () => inputRef.current?.focus() }}
       actions={
         <>
           <Button onClick={onClose}>{t('retro.cancel')}</Button>

@@ -47,11 +47,15 @@ export function SortableNoteItem({ note, isSelected, onClick }: SortableNoteItem
       </Box>
       <ListItemText
         primary={note.title || t('notes.untitled')}
-        primaryTypographyProps={{
-          noWrap: true,
-          fontWeight: isSelected ? 600 : 400,
-          fontSize: '0.875rem',
-          color: note.title ? 'text.primary' : 'text.disabled',
+        slotProps={{
+          primary: {
+            noWrap: true,
+            sx: {
+              fontWeight: isSelected ? 600 : 400,
+              fontSize: '0.875rem',
+              color: note.title ? 'text.primary' : 'text.disabled',
+            },
+          },
         }}
       />
     </ListItemButton>

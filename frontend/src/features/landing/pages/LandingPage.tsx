@@ -11,11 +11,11 @@ export function LandingPage() {
   return (
     <>
       <PageHead title={t('seo.home.title')} description={t('seo.home.description')} />
-      <Stack spacing={4} alignItems="center" textAlign="center" pt={8} pb={20}>
+      <Stack spacing={4} sx={{ alignItems: 'center', textAlign: 'center', pt: 8, pb: 20 }}>
         <Typography variant="h2" component="h1" sx={{ fontFamily: '"Orbitron", sans-serif' }}>
           {t('app.title')}
         </Typography>
-        <Typography variant="h6" component="p" color="text.secondary" maxWidth={600}>
+        <Typography variant="h6" component="p" color="text.secondary" sx={{ maxWidth: 600 }}>
           {t('landing.description')}
         </Typography>
         <Button variant="contained" size="large" onClick={() => navigate('/tools')}>

@@ -132,7 +132,7 @@ export function KanbanBoard({
             <Box sx={{ opacity: 0.9, width: 280 }}>
               <MuiCard variant="outlined">
                 <CardContent sx={{ p: 1, '&:last-child': { pb: 1 } }}>
-                  <Typography variant="body2" fontWeight={600} sx={{ wordBreak: 'break-word' }}>
+                  <Typography variant="body2" sx={{ fontWeight: 600, wordBreak: 'break-word' }}>
                     {activeCard.title}
                   </Typography>
                   <Box

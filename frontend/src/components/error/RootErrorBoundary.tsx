@@ -46,17 +46,17 @@ function RootErrorBoundaryFallback({ onRetry }: { onRetry: () => void }) {
     <>
       <PageHead title={title} noIndex />
       <Container maxWidth="lg" sx={{ py: 4 }}>
-        <Stack spacing={4} alignItems="center" textAlign="center" py={12}>
+        <Stack spacing={4} sx={{ alignItems: 'center', textAlign: 'center', py: 12 }}>
           <Box
             component="img"
             src="/NotFound.png"
             alt={title}
             sx={{ maxWidth: 200, width: '100%', height: 'auto', opacity: 0.8 }}
           />
-          <Typography variant="h4" component="h1" fontWeight={700}>
+          <Typography variant="h4" component="h1" sx={{ fontWeight: 700 }}>
             {title}
           </Typography>
-          <Typography variant="body1" color="text.secondary" maxWidth={480}>
+          <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 480 }}>
             {message}
           </Typography>
           <Stack direction="row" spacing={2}>

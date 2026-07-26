@@ -23,7 +23,7 @@ export function RequireAuth({ children }: RequireAuthProps) {
 
   if (isLoading) {
     return (
-      <Box display="flex" justifyContent="center" py={6}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', py: 6 }}>
         <CircularProgress />
       </Box>
     );

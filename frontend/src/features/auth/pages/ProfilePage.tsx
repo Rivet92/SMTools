@@ -355,7 +355,7 @@ export function ProfilePage() {
         <Box sx={{ flex: 1, p: 2, overflow: 'auto' }}>
           {activeSection === 0 && (
             <Stack spacing={3} sx={{ width: '100%' }}>
-              <Stack direction="row" spacing={2} alignItems="center">
+              <Stack direction="row" spacing={2} sx={{ alignItems: 'center' }}>
                 <Box sx={{ position: 'relative' }}>
                   <Box
                     onClick={() => setAvatarDialogOpen(true)}
@@ -436,7 +436,7 @@ export function ProfilePage() {
           )}
 
           {activeSection === 1 && (
-            <Box maxWidth={960}>
+            <Box sx={{ maxWidth: 960 }}>
               <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
                 {t('profile.activityDescription')}
               </Typography>
@@ -493,7 +493,7 @@ export function ProfilePage() {
           )}
 
           {activeSection === 2 && (
-            <Box maxWidth={640}>
+            <Box sx={{ maxWidth: 640 }}>
               <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
                 {t('profile.exportDescription')}
               </Typography>
@@ -520,7 +520,7 @@ export function ProfilePage() {
           )}
 
           {activeSection === 3 && (
-            <Box maxWidth={640}>
+            <Box sx={{ maxWidth: 640 }}>
               <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
                 {t('profile.deleteDescription')}
               </Typography>
@@ -615,7 +615,7 @@ export function ProfilePage() {
           {t('profile.avatarDialogHint')}
         </Typography>
 
-        <Stack spacing={2} alignItems="center">
+        <Stack spacing={2} sx={{ alignItems: 'center' }}>
           <Avatar
             src={previewUrl || user?.avatarUrl}
             alt={user?.name}
@@ -649,7 +649,7 @@ export function ProfilePage() {
             }}
           >
             <IconUpload size={32} color={dragOver ? 'primary.main' : undefined} />
-            <Typography variant="body2" color="text.secondary" textAlign="center">
+            <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center' }}>
               {t('profile.avatarDropHint')}
             </Typography>
           </Box>

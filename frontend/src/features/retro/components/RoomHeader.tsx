@@ -79,7 +79,7 @@ export function RoomHeader({
         ) : undefined
       }
     >
-      <Stack direction="row" spacing={0.5} alignItems="center">
+      <Stack direction="row" spacing={0.5} sx={{ alignItems: 'center' }}>
         {canManage && (
           <Tooltip title={t('retro.previousPhase')}>
             <span>

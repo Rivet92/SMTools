@@ -12,7 +12,7 @@ interface GenericDialogProps {
   maxWidth?: DialogProps['maxWidth'];
   fullWidth?: boolean;
   titleId?: string;
-  TransitionProps?: DialogProps['TransitionProps'];
+  TransitionProps?: Record<string, unknown>;
 }
 
 export function GenericDialog({
@@ -33,7 +33,7 @@ export function GenericDialog({
       maxWidth={maxWidth}
       fullWidth={fullWidth}
       aria-labelledby={titleId}
-      TransitionProps={TransitionProps}
+      slotProps={{ transition: TransitionProps }}
     >
       <DialogTitle
         id={titleId}

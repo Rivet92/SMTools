@@ -5,7 +5,7 @@ import {
   ButtonBase,
   Paper,
   Stack,
-  Grid2,
+  Grid,
   Collapse,
   IconButton,
   Tooltip,
@@ -61,7 +61,7 @@ export const VoteArea = memo(function VoteArea({
   if (!voteItem) {
     return (
       <Box sx={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Stack alignItems="center" spacing={2}>
+        <Stack spacing={2} sx={{ alignItems: 'center' }}>
           <IconClipboardText size={48} stroke={1} />
           <Typography variant="h6" color="text.secondary">
             {t('planningPoker.selectItem')}
@@ -77,7 +77,7 @@ export const VoteArea = memo(function VoteArea({
 
   return (
     <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', p: 2, overflow: 'auto' }}>
-      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 2 }}>
+      <Stack direction="row" sx={{ alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
         <Typography variant="h6">{voteItem.title}</Typography>
         {canManage && (
           <Stack direction="row" spacing={1}>
@@ -131,9 +131,9 @@ export const VoteArea = memo(function VoteArea({
           <Typography variant="subtitle2" sx={{ mb: 1 }}>
             {t('planningPoker.results')}
           </Typography>
-          <Grid2 container spacing={1}>
+          <Grid container spacing={1}>
             {voteItem.votes.map((vr) => (
-              <Grid2 key={vr.participantId}>
+              <Grid key={vr.participantId}>
                 <Paper
                   variant="outlined"
                   sx={{ px: 2, py: 1, textAlign: 'center', bgcolor: 'action.hover' }}
@@ -143,9 +143,9 @@ export const VoteArea = memo(function VoteArea({
                     {vr.participantName}
                   </Typography>
                 </Paper>
-              </Grid2>
+              </Grid>
             ))}
-          </Grid2>
+          </Grid>
         </Paper>
       </Collapse>
 
@@ -153,12 +153,12 @@ export const VoteArea = memo(function VoteArea({
         <Typography variant="subtitle2" sx={{ mb: 2, color: 'text.secondary' }}>
           {t('planningPoker.chooseCard')}
         </Typography>
-        <Grid2 container spacing={1.5}>
+        <Grid container spacing={1.5}>
           {cards.map((card) => {
             const isSelected = myVote?.value === card.value;
             const isDisabled = isRevealed || isVoting;
             return (
-              <Grid2 key={card.value}>
+              <Grid key={card.value}>
                 <ButtonBase
                   focusRipple
                   disabled={isDisabled}
@@ -187,17 +187,17 @@ export const VoteArea = memo(function VoteArea({
                   }}
                   onClick={() => handleVote(card.value)}
                 >
-                  <Stack alignItems="center" spacing={0.5}>
-                    <Typography variant="h5" fontWeight={700}>
+                    <Stack spacing={0.5} sx={{ alignItems: 'center' }}>
+                    <Typography variant="h5" sx={{ fontWeight: 700 }}>
                       {card.value}
                     </Typography>
                     {isSelected && <IconCheck size={16} />}
                   </Stack>
                 </ButtonBase>
-              </Grid2>
+              </Grid>
             );
           })}
-        </Grid2>
+        </Grid>
       </Box>
     </Box>
   );

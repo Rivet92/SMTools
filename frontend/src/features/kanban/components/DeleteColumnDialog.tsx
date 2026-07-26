@@ -59,7 +59,7 @@ export function DeleteColumnDialog({
             onChange={(e) => onTargetColumnIdChange(e.target.value)}
             size="small"
             fullWidth
-            SelectProps={{ native: true }}
+            slotProps={{ select: { native: true } }}
           >
             <option value="">{t('kanban.deleteCards')}</option>
             {otherColumns.map((c) => (

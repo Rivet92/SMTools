@@ -88,11 +88,13 @@ export function KanbanCardPage() {
           {!isNew && (
             <Tooltip
               title={t('kanban.deleteCard')}
-              PopperProps={{
-                modifiers: [
-                  { name: 'flip', enabled: true },
-                  { name: 'preventOverflow', enabled: true },
-                ],
+              slotProps={{
+                popper: {
+                  modifiers: [
+                    { name: 'flip', enabled: true },
+                    { name: 'preventOverflow', enabled: true },
+                  ],
+                },
               }}
             >
               <IconButton
@@ -127,11 +129,13 @@ export function KanbanCardPage() {
             {!isNew && (
               <Tooltip
                 title={t(isEditing ? 'notes.preview' : 'notes.edit')}
-                PopperProps={{
-                  modifiers: [
-                    { name: 'flip', enabled: true },
-                    { name: 'preventOverflow', enabled: true },
-                  ],
+                slotProps={{
+                  popper: {
+                    modifiers: [
+                      { name: 'flip', enabled: true },
+                      { name: 'preventOverflow', enabled: true },
+                    ],
+                  },
                 }}
               >
                 <Button

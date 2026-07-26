@@ -94,10 +94,12 @@ export function CardMetaFields({
               onChange={(e) => onAssignedChange(e.target.value)}
               size="small"
               sx={{ flex: 1 }}
-              SelectProps={{
-                MenuProps: {
-                  anchorOrigin: { vertical: 'top', horizontal: 'left' },
-                  transformOrigin: { vertical: 'bottom', horizontal: 'left' },
+              slotProps={{
+                select: {
+                  MenuProps: {
+                    anchorOrigin: { vertical: 'top', horizontal: 'left' },
+                    transformOrigin: { vertical: 'bottom', horizontal: 'left' },
+                  },
                 },
               }}
             >

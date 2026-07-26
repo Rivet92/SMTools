@@ -37,7 +37,7 @@ export function CommentItem({
   return (
     <Paper variant="outlined" sx={{ p: 1.5, mb: 1 }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
-        <Typography variant="caption" fontWeight={600}>
+        <Typography variant="caption" sx={{ fontWeight: 600 }}>
           {author?.displayName ?? t('kanban.unknownParticipant')}
         </Typography>
         <Typography variant="caption" color="text.secondary">

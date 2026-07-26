@@ -21,18 +21,20 @@ export function MainLayout() {
     >
       <Stack
         direction="row"
-        justifyContent={isLanding ? 'center' : 'flex-start'}
-        alignItems="center"
         spacing={isLanding ? 0 : 2}
-        mb={isLanding ? 2 : 1}
+        sx={{
+          justifyContent: isLanding ? 'center' : 'flex-start',
+          alignItems: 'center',
+          mb: isLanding ? 2 : 1,
+        }}
       >
         {!isLanding && (
           <Link component={RouterLink} to="/" color="inherit" underline="none">
             <Typography
               variant="h5"
               component="div"
-              fontWeight={600}
               sx={{
+                fontWeight: 600,
                 fontFamily: '"Orbitron", sans-serif',
                 lineHeight: 1,
                 display: 'flex',

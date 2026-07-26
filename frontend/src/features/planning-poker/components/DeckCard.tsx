@@ -16,7 +16,7 @@ export function DeckCard({ deck }: DeckCardProps) {
   return (
     <Card variant="outlined" sx={{ height: '100%' }}>
       <CardContent>
-        <Stack direction="row" alignItems="center" gap={1} mb={1}>
+        <Stack direction="row" sx={{ alignItems: 'center', gap: 1, mb: 1 }}>
           <Typography variant="h6" component="h2">
             {name}
           </Typography>
@@ -24,12 +24,12 @@ export function DeckCard({ deck }: DeckCardProps) {
         </Stack>
 
         {description && (
-          <Typography variant="body2" color="text.secondary" mb={2}>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
             {description}
           </Typography>
         )}
 
-        <Stack direction="row" flexWrap="wrap" gap={1}>
+        <Stack direction="row" sx={{ flexWrap: 'wrap', gap: 1 }}>
           {deck.cards.map((card) => (
             <Chip
               key={card.id}

@@ -23,7 +23,7 @@ export function LegalPage() {
     <>
       <PageHead title={t('legal.title')} />
       <Container maxWidth="lg" sx={{ pt: 2, pb: 6 }}>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 4 }}>
+        <Stack direction="row" sx={{ alignItems: 'center', justifyContent: 'space-between', mb: 4 }}>
           <Link
             component={RouterLink}
             to="/"
@@ -34,13 +34,12 @@ export function LegalPage() {
             <Typography
               variant="h5"
               component="span"
-              fontWeight={600}
-              sx={{ fontFamily: '"Orbitron", sans-serif', lineHeight: 1 }}
+              sx={{ fontWeight: 600, fontFamily: '"Orbitron", sans-serif', lineHeight: 1 }}
             >
               {t('app.title')}
             </Typography>
           </Link>
-          <Stack direction="row" spacing={1} alignItems="center">
+          <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
             <LanguageSelector compact />
             <ThemeToggle />
           </Stack>

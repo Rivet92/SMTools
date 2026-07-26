@@ -217,7 +217,7 @@ export function ColumnBoard({
       >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           <RetroColumnIcon name={column.icon} size={18} />
-          <Typography variant="subtitle2" fontWeight={600}>
+          <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
             {t(getRetroColumnNameKey(templateKey, column.key))}
           </Typography>
         </Box>

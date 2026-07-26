@@ -10,7 +10,7 @@ export function DeckList() {
 
   if (isLoading) {
     return (
-      <Box display="flex" justifyContent="center" p={4}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
         <CircularProgress />
       </Box>
     );
@@ -26,7 +26,7 @@ export function DeckList() {
 
   if (!decks || decks.length === 0) {
     return (
-      <Typography variant="body1" color="text.secondary" textAlign="center" p={4}>
+      <Typography variant="body1" color="text.secondary" sx={{ textAlign: 'center', p: 4 }}>
         {t('decks.empty')}
       </Typography>
     );

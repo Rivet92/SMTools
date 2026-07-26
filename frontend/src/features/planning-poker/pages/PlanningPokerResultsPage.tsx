@@ -9,7 +9,7 @@ import {
   Paper,
   Chip,
   Stack,
-  Grid2,
+  Grid,
   CircularProgress,
   Alert,
 } from '@mui/material';
@@ -63,7 +63,7 @@ export function PlanningPokerResultsPage() {
           title={t('seo.planningPoker.title')}
           description={t('seo.planningPoker.description')}
         />
-        <Box display="flex" justifyContent="center" py={6}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', py: 6 }}>
           <CircularProgress />
         </Box>
       </>
@@ -124,7 +124,7 @@ export function PlanningPokerResultsPage() {
                 py: 6,
               }}
             >
-              <Stack alignItems="center" spacing={2}>
+              <Stack spacing={2} sx={{ alignItems: 'center' }}>
                 <IconClipboardText size={48} stroke={1} />
                 <Typography variant="h6" color="text.secondary">
                   {t('planningPoker.noItems')}
@@ -162,9 +162,9 @@ export function PlanningPokerResultsPage() {
                   </Box>
 
                   {vi.isRevealed && vi.votes.length > 0 && (
-                    <Grid2 container spacing={1} sx={{ mt: 2 }}>
+                    <Grid container spacing={1} sx={{ mt: 2 }}>
                       {vi.votes.map((vr) => (
-                        <Grid2 key={vr.participantId}>
+                        <Grid key={vr.participantId}>
                           <Paper
                             variant="outlined"
                             sx={{ px: 2, py: 1, textAlign: 'center', bgcolor: 'action.hover' }}
@@ -174,9 +174,9 @@ export function PlanningPokerResultsPage() {
                               {vr.participantName}
                             </Typography>
                           </Paper>
-                        </Grid2>
+                    </Grid>
                       ))}
-                    </Grid2>
+                    </Grid>
                   )}
                 </Paper>
               ))}

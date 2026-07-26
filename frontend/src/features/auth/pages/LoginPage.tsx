@@ -21,22 +21,21 @@ export function LoginPage() {
         bgcolor: 'background.default',
       }}
     >
-      <Stack direction="row" spacing={2} alignItems="center" justifyContent="center" pt={2}>
+      <Stack direction="row" spacing={2} sx={{ alignItems: 'center', justifyContent: 'center', pt: 2 }}>
         <LanguageSelector compact />
         <ThemeToggle />
       </Stack>
 
-      <Box flex={1} display="flex" justifyContent="center" alignItems="center">
-        <Stack spacing={3} alignItems="center" width="100%" maxWidth={360} px={2}>
+      <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Stack spacing={3} sx={{ alignItems: 'center', width: '100%', maxWidth: 360, px: 2 }}>
           <Typography
             variant="h4"
             component="h1"
-            fontWeight={600}
-            sx={{ fontFamily: '"Orbitron", sans-serif' }}
+            sx={{ fontFamily: '"Orbitron", sans-serif', fontWeight: 600 }}
           >
             {t('app.title')}
           </Typography>
-          <Typography variant="body1" color="text.secondary" textAlign="center">
+          <Typography variant="body1" color="text.secondary" sx={{ textAlign: 'center' }}>
             {t('auth.login.title')}
           </Typography>
           <LoginOptions returnUrl={returnUrl} />

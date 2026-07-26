@@ -60,8 +60,8 @@ function FeatureErrorBoundaryFallback({
 
   return (
     <Container maxWidth="sm" sx={{ py: 8 }}>
-      <Stack spacing={3} alignItems="center" textAlign="center">
-        <Typography variant="h5" fontWeight={700}>
+        <Stack spacing={3} sx={{ alignItems: 'center', textAlign: 'center' }}>
+        <Typography variant="h5" sx={{ fontWeight: 700 }}>
           {title}
         </Typography>
         <Typography variant="body1" color="text.secondary">
