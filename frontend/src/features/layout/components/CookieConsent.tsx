@@ -46,7 +46,7 @@ export function CookieConsent() {
           <IconCookie size={28} style={{ marginTop: 4 }} />
           <Stack spacing={1} sx={{ flex: 1 }}>
             <Typography variant="body2">{t('cookies.message')}</Typography>
-              <Stack direction="row" spacing={1} useFlexGap sx={{ flexWrap: 'wrap' }}>
+            <Stack direction="row" spacing={1} useFlexGap sx={{ flexWrap: 'wrap' }}>
               <Button size="small" onClick={handleDismiss} variant="contained">
                 {t('common.close')}
               </Button>
