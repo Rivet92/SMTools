@@ -7,7 +7,8 @@
     <InvariantGlobalization>true</InvariantGlobalization>
     <DebugType>none</DebugType>
     <InternalsVisibleTo>SMToolsBackend.Tests</InternalsVisibleTo>
-    <NoWarn>$(NoWarn);AD0001</NoWarn>
+    <NoWarn>$(NoWarn);AD0001;NU1903</NoWarn>
+    <NuGetAuditSuppress>GHSA-2m69-gcr7-jv3q</NuGetAuditSuppress>
   </PropertyGroup>
 
   <ItemGroup>

@@ -5,6 +5,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
+    <NoWarn>$(NoWarn);NU1903</NoWarn>
+    <NuGetAuditSuppress>GHSA-2m69-gcr7-jv3q</NuGetAuditSuppress>
   </PropertyGroup>
 
   <ItemGroup>

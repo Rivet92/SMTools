@@ -43,7 +43,18 @@ jobs:
         run: dotnet build --no-restore
 
       - name: Check NuGet vulnerabilities
-        run: dotnet list package --vulnerable --include-transitive 2>&1 | tee nuget-vulns.txt && if grep -qi "vulnerability" nuget-vulns.txt; then echo "Vulnerabilities found!"; cat nuget-vulns.txt; exit 1; fi
+        run: |
+          dotnet list package --vulnerable --include-transitive 2>&1 | tee nuget-vulns.txt
+          if grep -qi "vulnerability" nuget-vulns.txt; then
+            # sqlitepclraw replacement by sourcegear.sqlite3
+            if ! grep -v "GHSA-2m69-gcr7-jv3q" nuget-vulns.txt | grep -qi "vulnerability"; then
+              echo "Only known suppressed advisory: GHSA-2m69-gcr7-jv3q (SQLitePCLRaw.lib.e_sqlite3 - replaced by SourceGear.sqlite3)"
+            else
+              echo "Vulnerabilities found!"
+              cat nuget-vulns.txt
+              exit 1
+            fi
+          fi
 
       - name: Check formatting
         run: dotnet format SMTools.slnx --verify-no-changes
