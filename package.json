@@ -40,7 +40,7 @@
     "db:update": "dotnet ef database update --project backend/src/SMTools.Api/SMTools.Api.csproj"
   },
   "devDependencies": {
-    "concurrently": "^9.1.2"
+    "concurrently": "^10.0.4"
   },
   "pnpm": {
     "overrides": {
