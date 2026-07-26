@@ -34,4 +34,4 @@ Monorepo con **pnpm**. El backend .NET está dividido por bounded contexts (no C
 
 Endpoints con **Minimal APIs** (sin controladores). Comunicación en tiempo real vía **SignalR** (`/hubs/planning-poker`, `/hubs/retro`, `/hubs/kanban`). Autenticación con cookies + OAuth.
 
-El frontend sigue **feature-sliced** bajo `frontend/src/features/<name>/`, con Zustand para estado cliente, React Query para estado servidor y MUI v6 (`sx` prop, sin CSS modules ni Tailwind).
+El frontend sigue **feature-sliced** bajo `frontend/src/features/<name>/`, con Zustand para estado cliente, React Query para estado servidor y MUI v9 (`sx` prop, sin CSS modules ni Tailwind).

@@ -175,7 +175,7 @@ The `contract` CI job blocks drift if `api.ts` is out of sync with the backend.
   - `store/` — Zustand stores for client state shared across the feature
   - `types/` — domain types (when not in `src/types/models/`)
 - **State management**: Zustand (client) + `@tanstack/react-query` (server). No persistence except `localStorage` for theme. `authStore` was removed; auth is managed via `auth/hooks/useCurrentUser.ts` with react-query.
-- **Styling**: MUI v6 with `sx` prop only. No CSS modules, no Tailwind. Icons from `@tabler/icons-react`.
+- **Styling**: MUI v9 with `sx` prop only. No CSS modules, no Tailwind. Icons from `@tabler/icons-react`.
 - **Auth**: cookie-based via backend. OAuth (Google, GitHub). Frontend sets `credentials: 'include'` on all API calls.
 - **i18n**: translations as static JSON files in `public/translations/{en,es-ES}.json` + `public/translations/languages.json`. Loaded via React Query (`fetchTranslations`/`fetchLanguages` in `src/api/i18n.ts`). Supported languages: `en`, `es-ES`. Files are served statically, not bundled.
 
