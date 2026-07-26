@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import { Box, Typography, Alert } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import { PageHead } from '../../../components/seo/PageHead';
 import { PageHeader } from '../../../components/PageHeader';
 import { useKanbanRoomData } from '../hooks/useKanbanRoomData';

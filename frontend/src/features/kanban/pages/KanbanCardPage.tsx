@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Alert, Box, Button, IconButton, TextField, Tooltip, Typography } from '@mui/material';
 import { IconEdit, IconEye, IconTrash } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { PageHead } from '../../../components/seo/PageHead';
 import { PageHeader } from '../../../components/PageHeader';
 import { ConfirmDialog } from '../../../components/room-lobby/ConfirmDialog';

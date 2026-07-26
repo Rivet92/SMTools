@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router';
 import { Box, Button, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { RequireRoomPassword } from '../room-lobby/RequireRoomPassword';

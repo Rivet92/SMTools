@@ -1,5 +1,5 @@
 import { Box, Container, Link, Stack, Typography } from '@mui/material';
-import { Link as RouterLink, Outlet, useLocation } from 'react-router-dom';
+import { Link as RouterLink, Outlet, useLocation } from 'react-router';
 import { LandingHeader } from '../../landing/components/LandingHeader';
 import { UserMenu } from '../../auth/components/UserMenu';
 import { Breadcrumbs } from './Breadcrumbs';

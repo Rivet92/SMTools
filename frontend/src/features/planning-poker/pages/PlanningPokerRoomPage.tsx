@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { usePlanningPokerStore } from '../store/planningPokerStore';
 import { PageHead } from '../../../components/seo/PageHead';
 import { usePlanningPokerRoomData } from '../hooks/usePlanningPokerRoomData';

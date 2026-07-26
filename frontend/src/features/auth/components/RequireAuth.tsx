@@ -1,6 +1,6 @@
 import { Box, CircularProgress } from '@mui/material';
 import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { useCurrentUser } from '../hooks/useCurrentUser';
 
 interface RequireAuthProps {

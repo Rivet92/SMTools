@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { RouterProvider } from 'react-router-dom';
+import { RouterProvider } from 'react-router';
 import { Box, CircularProgress, CssBaseline } from '@mui/material';
 import { useInitI18n } from './features/i18n/hooks/use-init-i18n';
 import { useDocumentLang } from './features/seo/hooks/useDocumentLang';

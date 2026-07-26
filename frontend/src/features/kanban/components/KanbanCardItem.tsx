@@ -13,7 +13,7 @@ import { IconMessageCircle, IconUser, IconUserOff } from '@tabler/icons-react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router';
 import type { Card, Participant } from '../store/kanbanStore';
 
 export const KanbanCardItem = memo(function KanbanCardItem({

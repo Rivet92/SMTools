@@ -3,7 +3,7 @@ import { renderHook, act } from '@testing-library/react';
 import { usePlanningPokerLobby } from '../usePlanningPokerLobby';
 
 const mockNavigate = vi.fn();
-vi.mock('react-router-dom', () => ({
+vi.mock('react-router', () => ({
   useNavigate: () => mockNavigate,
 }));
 

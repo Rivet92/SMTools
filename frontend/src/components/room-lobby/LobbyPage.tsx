@@ -1,5 +1,5 @@
 import { type ReactNode, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { Box, CircularProgress, Alert, IconButton, Tooltip } from '@mui/material';
 import { IconPlus, IconLink, IconTrash } from '@tabler/icons-react';

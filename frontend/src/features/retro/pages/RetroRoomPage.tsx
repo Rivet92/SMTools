@@ -1,6 +1,6 @@
 import { Box, Alert, CircularProgress } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router';
 import { useRoomClosedSnackbar } from '../../../hooks/useRoomClosedSnackbar';
 import { PageHead } from '../../../components/seo/PageHead';
 import { useRetroStore } from '../store/retroStore';

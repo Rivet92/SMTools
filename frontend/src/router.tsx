@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { createBrowserRouter, type RouteObject } from 'react-router-dom';
+import { createBrowserRouter, type RouteObject } from 'react-router';
 import { MainLayout } from './features/layout/components/MainLayout';
 import { FeatureErrorBoundary } from './components/error/FeatureErrorBoundary';
 import { PageFallback } from './components/PageFallback';

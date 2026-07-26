@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import { ParticipantsPage } from '../../../components/room-participants/ParticipantsPage';
 import { usePlanningPokerStore } from '../store/planningPokerStore';
 import * as hub from '../planningPokerHub';

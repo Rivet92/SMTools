@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { Box, CircularProgress } from '@mui/material';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { selectIsAdmin, selectIsOwner } from '../../stores/roomSelectors';
 import { ParticipantsManager, type ParticipantBase } from './ParticipantsManager';

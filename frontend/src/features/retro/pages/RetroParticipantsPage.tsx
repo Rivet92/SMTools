@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import { ParticipantsPage } from '../../../components/room-participants/ParticipantsPage';
 import { useRetroStore } from '../store/retroStore';
 import * as hub from '../retroHub';

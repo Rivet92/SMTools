@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import { ParticipantsPage } from '../../../components/room-participants/ParticipantsPage';
 import { useKanbanStore } from '../store/kanbanStore';
 import * as hub from '../kanbanHub';

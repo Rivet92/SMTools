@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { Box, Alert, Stack, Typography } from '@mui/material';
 import { IconSettings } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router';
 import { PageHead } from '../../../components/seo/PageHead';
 import { useKanbanStore } from '../store/kanbanStore';
 import { useKanbanRoomData } from '../hooks/useKanbanRoomData';

@@ -1,6 +1,6 @@
 import { Box, Stack, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { LanguageSelector } from '../../i18n/components/LanguageSelector';
 import { ThemeToggle } from '../../theme/components/ThemeToggle';
 import { LoginOptions } from '../components/LoginOptions';

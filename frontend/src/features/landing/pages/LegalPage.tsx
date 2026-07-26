@@ -1,5 +1,5 @@
 import { Box, Container, Link, Stack, Typography } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { LanguageSelector } from '../../i18n/components/LanguageSelector';
 import { ThemeToggle } from '../../theme/components/ThemeToggle';

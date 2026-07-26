@@ -1,6 +1,6 @@
 import { Box, Breadcrumbs as MuiBreadcrumbs, Link, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { Link as RouterLink, useLocation } from 'react-router';
 import { useKanbanStore } from '../../kanban/store/kanbanStore';
 import { usePlanningPokerStore } from '../../planning-poker/store/planningPokerStore';
 import { useRetroStore } from '../../retro/store/retroStore';
