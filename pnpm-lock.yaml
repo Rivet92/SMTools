@@ -38,8 +38,8 @@ importers:
         specifier: ^11.14.0
         version: 11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.8))(@types/react@19.2.17)(react@19.2.8)
       '@microsoft/signalr':
-        specifier: ^8.0.0
-        version: 8.0.17
+        specifier: ^10.0.0
+        version: 10.0.0
       '@mui/material':
         specifier: ^9.2.0
         version: 9.2.0(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.8))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.2.8))(@types/react@19.2.17)(react@19.2.8))(@types/react@19.2.17)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -62,8 +62,8 @@ importers:
         specifier: ^17.0.10
         version: 17.0.11(i18next@26.3.6(typescript@5.8.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(typescript@5.8.3)
       react-markdown:
-        specifier: ^9.0.0
-        version: 9.1.0(@types/react@19.2.17)(react@19.2.8)
+        specifier: ^10.1.0
+        version: 10.1.0(@types/react@19.2.17)(react@19.2.8)
       react-router:
         specifier: 8.3.0
         version: 8.3.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -617,8 +617,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@microsoft/signalr@8.0.17':
-    resolution: {integrity: sha512-5pM6xPtKZNJLO0Tq5nQasVyPFwi/WBY3QB5uc/v3dIPTpS1JXQbaXAQAPxFoQ5rTBFE094w8bbqkp17F9ReQvA==}
+  '@microsoft/signalr@10.0.0':
+    resolution: {integrity: sha512-0BRqz/uCx3JdrOqiqgFhih/+hfTERaUfCZXFB52uMaZJrKaPRzHzMuqVsJC/V3pt7NozcNXGspjKiQEK+X7P2w==}
 
   '@mui/core-downloads-tracker@9.2.0':
     resolution: {integrity: sha512-+XMav+ZaXkZKUFUgzjrfMEedfyJKxxviAske2q8N8CWDMeqZdDU2lWMkiUPiB388hGaDqhwvOAwkrsc/pUyp8g==}
@@ -2312,8 +2312,8 @@ packages:
   react-is@19.2.8:
     resolution: {integrity: sha512-s5un28nYxKJw5gvUHyW5PCC28CvBqLu9r3cWgzHT4Vo/5fqqkFcdRYsGcKf50WMPpjjFZS5d76fn3YCo2njKwQ==}
 
-  react-markdown@9.1.0:
-    resolution: {integrity: sha512-xaijuJB0kzGiUdG7nc2MOMDUDBWPyGAjZtUrow9XxUeua8IqeP+VlIfAZ3bphpcLTnSZXz6z9jcVC/TCwbfgdw==}
+  react-markdown@10.1.0:
+    resolution: {integrity: sha512-qKxVopLT/TyA6BX3Ue5NwabOsAzm0Q7kAPwq6L+wWDwisYs7R8vZ0nRXqq6rkueboxpkjvLGU9fWifiX/ZZFxQ==}
     peerDependencies:
       '@types/react': '>=18'
       react: ^19.2.7
@@ -3376,7 +3376,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@microsoft/signalr@8.0.17':
+  '@microsoft/signalr@10.0.0':
     dependencies:
       abort-controller: 3.0.0
       eventsource: 2.0.2
@@ -5402,7 +5402,7 @@ snapshots:
 
   react-is@19.2.8: {}
 
-  react-markdown@9.1.0(@types/react@19.2.17)(react@19.2.8):
+  react-markdown@10.1.0(@types/react@19.2.17)(react@19.2.8):
     dependencies:
       '@types/hast': 3.0.5
       '@types/mdast': 4.0.4
