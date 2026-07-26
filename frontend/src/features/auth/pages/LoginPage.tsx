@@ -21,7 +21,11 @@ export function LoginPage() {
         bgcolor: 'background.default',
       }}
     >
-      <Stack direction="row" spacing={2} sx={{ alignItems: 'center', justifyContent: 'center', pt: 2 }}>
+      <Stack
+        direction="row"
+        spacing={2}
+        sx={{ alignItems: 'center', justifyContent: 'center', pt: 2 }}
+      >
         <LanguageSelector compact />
         <ThemeToggle />
       </Stack>

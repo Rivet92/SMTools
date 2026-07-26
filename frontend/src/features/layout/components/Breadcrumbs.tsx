@@ -113,7 +113,11 @@ export function Breadcrumbs() {
 
           if (isLast) {
             return (
-              <Typography key={segment.path} variant="body2" sx={{ color: 'text.primary', display: 'inline' }}>
+              <Typography
+                key={segment.path}
+                variant="body2"
+                sx={{ color: 'text.primary', display: 'inline' }}
+              >
                 {content}
               </Typography>
             );
