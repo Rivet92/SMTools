@@ -23,7 +23,10 @@ export function LegalPage() {
     <>
       <PageHead title={t('legal.title')} />
       <Container maxWidth="lg" sx={{ pt: 2, pb: 6 }}>
-        <Stack direction="row" sx={{ alignItems: 'center', justifyContent: 'space-between', mb: 4 }}>
+        <Stack
+          direction="row"
+          sx={{ alignItems: 'center', justifyContent: 'space-between', mb: 4 }}
+        >
           <Link
             component={RouterLink}
             to="/"

@@ -174,7 +174,7 @@ export function PlanningPokerResultsPage() {
                               {vr.participantName}
                             </Typography>
                           </Paper>
-                    </Grid>
+                        </Grid>
                       ))}
                     </Grid>
                   )}

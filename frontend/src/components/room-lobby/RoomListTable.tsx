@@ -128,7 +128,10 @@ export function RoomListTable({
                   }}
                   onClick={onRoomClick ? () => onRoomClick(room.id) : undefined}
                 >
-                  <Typography variant="body2" sx={{ fontWeight: 600, fontSize: '1rem', whiteSpace: 'nowrap' }}>
+                  <Typography
+                    variant="body2"
+                    sx={{ fontWeight: 600, fontSize: '1rem', whiteSpace: 'nowrap' }}
+                  >
                     {room.title}
                   </Typography>
                   {room.isOwner && (
