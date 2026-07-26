@@ -3,7 +3,7 @@
 # -------------------------
 # Stage 1: Build frontend
 # -------------------------
-FROM node:22-alpine AS frontend-build
+FROM node:26-alpine AS frontend-build
 WORKDIR /src
 
 # Install pnpm with a fixed version
