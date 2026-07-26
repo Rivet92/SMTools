@@ -78,7 +78,12 @@ export function RoomListFilters({
 
       <Collapse in={showFilters}>
         <Paper variant="outlined" sx={{ p: 1.5, mb: 1.5 }}>
-          <Stack direction="row" spacing={2} sx={{ alignItems: 'center', flexWrap: 'wrap' }} useFlexGap>
+          <Stack
+            direction="row"
+            spacing={2}
+            sx={{ alignItems: 'center', flexWrap: 'wrap' }}
+            useFlexGap
+          >
             <TextField
               label={labels.fromDate}
               type="date"
