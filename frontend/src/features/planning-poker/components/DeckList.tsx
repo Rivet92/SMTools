@@ -1,4 +1,5 @@
-import { Alert, Box, CircularProgress, Grid, Typography } from '@mui/material';
+import { Alert, Box, CircularProgress, Typography } from '@mui/material';
+import Grid from '@mui/material/Grid';
 import { useTranslation } from 'react-i18next';
 import { usePlanningPokerDecks } from '../hooks/usePlanningPoker';
 import { DeckCard } from './DeckCard';
@@ -34,7 +35,7 @@ export function DeckList() {
   return (
     <Grid container spacing={3}>
       {decks.map((deck) => (
-        <Grid item xs={12} md={6} lg={4} key={deck.id}>
+        <Grid size={{ xs: 12, md: 6, lg: 4 }} key={deck.id}>
           <DeckCard deck={deck} />
         </Grid>
       ))}
