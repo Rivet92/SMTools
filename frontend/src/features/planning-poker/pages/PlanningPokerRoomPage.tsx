@@ -74,6 +74,7 @@ export function PlanningPokerRoomPage() {
   } = usePlanningPokerRoomDialogs();
 
   const { copyLink } = useCopyRoomLink();
+  // eslint-disable-next-line react-hooks/preserve-manual-memoization
   const handleCopyLink = useCallback(() => {
     if (!room?.id) return;
     copyLink(room.id, (id) => `/tools/planning-poker/${id}`);

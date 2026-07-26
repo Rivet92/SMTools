@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { Box, Button, IconButton, Typography } from '@mui/material';
@@ -8,6 +8,7 @@ import { PageHead } from '../../../components/seo/PageHead';
 import { PageHeader } from '../../../components/PageHeader';
 import { useKanbanRoomData } from '../hooks/useKanbanRoomData';
 import { useKanbanRoomActions } from '../hooks/useKanbanRoomActions';
+import { useKanbanStore } from '../store/kanbanStore';
 import { useColumnDragReorder } from '../hooks/useColumnDragReorder';
 import { useColumnDeleteDialog } from '../hooks/useColumnDeleteDialog';
 import { RoomLoadingState } from '../../../components/room-lobby/RoomLoadingState';
@@ -67,25 +68,18 @@ export function KanbanBoardConfigPage() {
     [columns, validSelectedId],
   );
 
-  const justAddedRef = useRef(false);
-  const prevColumnsLengthRef = useRef(columns.length);
-  useEffect(() => {
-    if (columns.length > prevColumnsLengthRef.current && justAddedRef.current) {
-      const lastColumn = columns[columns.length - 1];
-      if (lastColumn) setSelectedColumnId(lastColumn.id);
-      justAddedRef.current = false;
-    }
-    prevColumnsLengthRef.current = columns.length;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [columns.length]);
-
   const handleGoBack = useCallback(() => {
     navigate(`/tools/kanban/${roomId}`);
   }, [navigate, roomId]);
 
   const handleAddEmptyColumn = useCallback(async () => {
-    justAddedRef.current = true;
     await handleAddColumn('', '');
+    const state = useKanbanStore.getState();
+    if (state.room) {
+      const sorted = [...state.room.columns].sort((a, b) => a.displayOrder - b.displayOrder);
+      const last = sorted[sorted.length - 1];
+      if (last) setSelectedColumnId(last.id);
+    }
   }, [handleAddColumn]);
 
   const handleSaveEdit = useCallback(
