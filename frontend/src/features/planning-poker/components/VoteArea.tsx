@@ -187,7 +187,7 @@ export const VoteArea = memo(function VoteArea({
                   }}
                   onClick={() => handleVote(card.value)}
                 >
-                    <Stack spacing={0.5} sx={{ alignItems: 'center' }}>
+                  <Stack spacing={0.5} sx={{ alignItems: 'center' }}>
                     <Typography variant="h5" sx={{ fontWeight: 700 }}>
                       {card.value}
                     </Typography>
