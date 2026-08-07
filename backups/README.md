@@ -8,23 +8,22 @@ almacenamiento local + remoto (Scaleway Object Storage).
 ```
 Cron (00:00)
   ├── pg_dump ──▶ gzip ──▶ gpg ──▶ /var/backups/smtools/daily/smtools_db_<date>.sql.gz.gpg
-  │                                     ├── local (retención 30 días, purge automático)
-  │                                     ├── aws s3 cp ──▶ s3://bucket/db/
-  │                                     └── aws s3 rm (objetos >30 días)
+  │                                     ├── local (retención 90 días, purge automático)
+  │                                     └── aws s3 cp ──▶ s3://bucket/db/
   │
   └── docker exec smtools_app tar ──▶ gzip ──▶ gpg ──▶ /var/backups/smtools/daily/smtools_avatars_<date>.tar.gz.gpg
-                                                ├── local (retención 30 días, purge automático)
-                                                ├── aws s3 cp ──▶ s3://bucket/avatars/
-                                                └── aws s3 rm (objetos >30 días)
+                                                ├── local (retención 90 días, purge automático)
+                                                └── aws s3 cp ──▶ s3://bucket/avatars/
 ```
 
 El servidor solo tiene la **clave pública** GPG. La clave privada con su passphrase
 está en tu máquina local. Si alguien vulnera el servidor, los backups ya subidos
 no se pueden descifrar.
 
-**Retención automática**: tanto los archivos locales como los objetos remotos en S3
-se eliminan automáticamente cuando superan los 30 días. No es necesario configurar
-lifecycle rules manualmente, aunque se recomienda como redundancia.
+**Retención automática**: los archivos locales se eliminan automáticamente cuando
+superan los 90 días (`RETENTION_DAYS`, configurable en `backup.env`). La retención
+remota en S3 (90 días) la aplica una **lifecycle rule del bucket** — el script no
+borra en la nube.
 
 Los avatares se almacenan en un volumen Docker (`smtools-avatars`) montado en
 `/app/wwwroot/avatars` para que persistan entre reinicios del contenedor.
@@ -167,14 +166,11 @@ gpg --delete-secret-keys backup@smtools.dev
 1. Ve a **IAM** → **Credentials** → crear unas credenciales con política de solo
    lectura/escritura en Object Storage (nunca uses la clave maestra del proyecto).
 2. Ve a **Object Storage** → crear un bucket (ej. `smtools-backups`).
-3. (Opcional, redundancia recomendada) En la pestaña **Lifecycle Rules** del bucket, añade una regla:
+3. **Obligatorio**: en la pestaña **Lifecycle Rules** del bucket, añade una regla de
+   borrado para aplicar la retención remota (el script no borra en la nube):
    - **Name**: `expire-old-backups`
-   - **Days**: `30`
+   - **Days**: `90`
    - **Action**: `Delete`
-   
-   El script de backup ya limpia los objetos >30 días (`aws s3 ls --older-than 30` +
-   `aws s3 rm`), pero la lifecycle rule actúa como salvaguarda si el script falla
-   durante varios días.
 
 ## Ficheros del proyecto
 

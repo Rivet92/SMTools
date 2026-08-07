@@ -82,32 +82,11 @@ fi
 
 RC=$(( DB_RC | AV_RC ))
 
-# ---- Cleanup remote >30 days ----
-# NOTE: --older-than only exists on `aws s3 ls`, not `aws s3 rm`. List first,
-# then delete each object.
-cleanup_remote() {
-  local prefix="$1"
-  local cutoff="${RETENTION_DAYS:-30}"
-  local objects
-  objects="$(aws s3 ls "s3://${SCW_BUCKET}/${prefix}/" --recursive --older-than "$cutoff" \
-    --endpoint-url "$AWS_ENDPOINT_URL" 2>>"$LOG" || true)"
-  [ -z "$objects" ] && return 0
-  echo "$objects" \
-  | awk '{print $4}' \
-  | while IFS= read -r key; do
-      [ -z "$key" ] && continue
-      aws s3 rm "s3://${SCW_BUCKET}/${key}" \
-        --endpoint-url "$AWS_ENDPOINT_URL" >> "$LOG" 2>&1 \
-        || echo "[WARN] Remote cleanup: failed to delete $key" >> "$LOG"
-    done
-}
-
-echo "[$(date)] Cleaning remote backups older than 30 days..." >> "$LOG"
-cleanup_remote "db"
-cleanup_remote "avatars"
-
-# ---- Cleanup local >30 days ----
-DELETED=$(find "$BACKUP_DIR" -name "smtools_*.gpg" -mtime +30 -print -delete | wc -l)
+# ---- Cleanup local ----
+# Remote retention (90 days) is enforced by the bucket lifecycle rule; the
+# script only purges local files so the server disk does not grow unbounded.
+RETENTION_DAYS="${RETENTION_DAYS:-90}"
+DELETED=$(find "$BACKUP_DIR" -name "smtools_*.gpg" -mtime +"$RETENTION_DAYS" -print -delete | wc -l)
 echo "[$(date)] Backup complete (exit=${RC}). Deleted=${DELETED}" >> "$LOG"
 
 # Notify on failure (example: log aggregation)
