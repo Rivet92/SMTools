@@ -40,6 +40,14 @@ try
     if (dumpPath is not null)
     {
         var outPath = dumpPath["--dump-openapi=".Length..];
+        // dotnet run launches the app with the project directory as the working
+        // directory, so anchor relative paths to the repository root where the
+        // CI contract job and frontend generate-types expect the snapshot.
+        if (!Path.IsPathRooted(outPath))
+        {
+            outPath = Path.Combine(FindRepositoryRoot(app.Environment.ContentRootPath) ?? Directory.GetCurrentDirectory(), outPath);
+        }
+
         app.Urls.Clear();
         app.Urls.Add("http://127.0.0.1:0");
         await app.StartAsync();
@@ -152,4 +160,19 @@ static void FixOpenApiSchemas(System.Text.Json.Nodes.JsonNode? node)
             FixOpenApiSchemas(item);
         }
     }
+}
+
+static string? FindRepositoryRoot(string startDir)
+{
+    var dir = new DirectoryInfo(startDir);
+    while (dir is not null)
+    {
+        if (Directory.Exists(Path.Combine(dir.FullName, "frontend")) &&
+            Directory.Exists(Path.Combine(dir.FullName, "backend")))
+        {
+            return dir.FullName;
+        }
+        dir = dir.Parent;
+    }
+    return null;
 }
