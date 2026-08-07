@@ -20,6 +20,38 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/auth/logout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["Logout"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/auth/test-login": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["TestLogin"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/auth/me": {
         parameters: {
             query?: never;
@@ -36,7 +68,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/auth/logout": {
+    "/api/auth/profile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["UpdateProfile"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/auth/avatar": {
         parameters: {
             query?: never;
             header?: never;
@@ -45,8 +93,40 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["Logout"];
+        post: operations["UploadAvatar"];
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/auth/export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ExportUserData"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/auth/account": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["DeleteAccount"];
         options?: never;
         head?: never;
         patch?: never;
@@ -427,7 +507,7 @@ export interface components {
             password: string | null;
         };
         CreateNoteRequest: {
-            title: string;
+            title: string | null;
             content: string | null;
         };
         CreatePlanningPokerRoomRequest: {
@@ -442,6 +522,8 @@ export interface components {
             /** Format: uuid */
             templateId: string | null;
         };
+        /** Format: binary */
+        IFormFile: string;
         KanbanCardCommentDto: {
             /** Format: uuid */
             id: string;
@@ -488,14 +570,6 @@ export interface components {
             /** Format: int32 */
             displayOrder: number;
         };
-        KanbanParticipantDto: {
-            /** Format: uuid */
-            id: string;
-            displayName: string;
-            isOwner: boolean;
-            isAdmin: boolean;
-            isConnected: boolean;
-        };
         KanbanRoomResponse: {
             /** Format: uuid */
             id: string;
@@ -510,14 +584,16 @@ export interface components {
             title: string;
             /** Format: date-time */
             createdAt: string;
-            participants: components["schemas"]["KanbanParticipantDto"][];
+            participants: components["schemas"]["ParticipantDto"][];
             columns: components["schemas"]["KanbanColumnDto"][];
             cards: components["schemas"]["KanbanCardDto"][];
             /** Format: uuid */
             ownParticipantId: string;
             hasPassword: boolean;
+            /** Format: int32 */
+            version?: number;
         };
-        MyKanbanRoomResponse: {
+        MyRoomResponse: {
             /** Format: uuid */
             id: string;
             title: string;
@@ -526,38 +602,20 @@ export interface components {
             isOwner: boolean;
             isAdmin: boolean;
         };
-        MyPlanningPokerRoomResponse: {
-            /** Format: uuid */
-            id: string;
-            title: string;
-            /** Format: date-time */
-            createdAt: string;
-            isOwner: boolean;
-            isAdmin: boolean;
-        };
-        MyRetroRoomResponse: {
-            /** Format: uuid */
-            id: string;
-            title: string;
-            /** Format: date-time */
-            createdAt: string;
-            isOwner: boolean;
-            isAdmin: boolean;
-        };
-        Note: {
+        NoteDto: {
             /** Format: uuid */
             id: string;
             /** Format: uuid */
             userId: string;
             title: string;
-            content: string;
+            content: string | null;
             isArchived: boolean;
             /** Format: int32 */
             position: number;
             /** Format: date-time */
             createdAt: string;
             /** Format: date-time */
-            updatedAt: string;
+            updatedAt: string | null;
         };
         NoteReorderItem: {
             /** Format: uuid */
@@ -575,8 +633,8 @@ export interface components {
             /** Format: int32 */
             pageSize: number;
         };
-        PagedResponseOfMyKanbanRoomResponse: {
-            items: components["schemas"]["MyKanbanRoomResponse"][];
+        PagedResponseOfMyRoomResponse: {
+            items: components["schemas"]["MyRoomResponse"][];
             /** Format: int32 */
             totalCount: number;
             /** Format: int32 */
@@ -584,26 +642,8 @@ export interface components {
             /** Format: int32 */
             pageSize: number;
         };
-        PagedResponseOfMyPlanningPokerRoomResponse: {
-            items: components["schemas"]["MyPlanningPokerRoomResponse"][];
-            /** Format: int32 */
-            totalCount: number;
-            /** Format: int32 */
-            page: number;
-            /** Format: int32 */
-            pageSize: number;
-        };
-        PagedResponseOfMyRetroRoomResponse: {
-            items: components["schemas"]["MyRetroRoomResponse"][];
-            /** Format: int32 */
-            totalCount: number;
-            /** Format: int32 */
-            page: number;
-            /** Format: int32 */
-            pageSize: number;
-        };
-        PagedResponseOfNote: {
-            items: components["schemas"]["Note"][];
+        PagedResponseOfNoteDto: {
+            items: components["schemas"]["NoteDto"][];
             /** Format: int32 */
             totalCount: number;
             /** Format: int32 */
@@ -697,14 +737,6 @@ export interface components {
             color: string;
             icon: string;
         };
-        RetroParticipantDto: {
-            /** Format: uuid */
-            id: string;
-            displayName: string;
-            isOwner: boolean;
-            isAdmin: boolean;
-            isConnected: boolean;
-        };
         RetroRoomResponse: {
             /** Format: uuid */
             id: string;
@@ -724,7 +756,7 @@ export interface components {
             phase: string;
             /** Format: uuid */
             templateId: string;
-            participants: components["schemas"]["RetroParticipantDto"][];
+            participants: components["schemas"]["ParticipantDto"][];
             columns: components["schemas"]["RetroColumnDto"][];
             cards: components["schemas"]["RetroCardDto"][];
             groups: components["schemas"]["RetroCardGroupDto"][];
@@ -732,6 +764,8 @@ export interface components {
             /** Format: uuid */
             ownParticipantId: string;
             hasPassword: boolean;
+            /** Format: int32 */
+            version?: number;
         };
         RetroTemplateResponse: {
             /** Format: uuid */
@@ -753,10 +787,16 @@ export interface components {
             /** Format: uuid */
             deckId: string;
             hasPassword: boolean;
+            /** Format: int32 */
+            version?: number;
         };
         UpdateNoteRequest: {
             title: string | null;
             content: string | null;
+        };
+        UpdateProfileRequest: {
+            name: string | null;
+            avatarUrl: string | null;
         };
         UserResponse: {
             /** Format: uuid */
@@ -770,7 +810,7 @@ export interface components {
             /** Format: uuid */
             participantId: string;
             participantName: string;
-            value: string;
+            value: string | null;
         };
         VoteItemDto: {
             /** Format: uuid */
@@ -797,6 +837,42 @@ export interface operations {
             path: {
                 provider: string;
             };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    Logout: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    TestLogin: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
             cookie?: never;
         };
         requestBody?: never;
@@ -839,7 +915,71 @@ export interface operations {
             };
         };
     };
-    Logout: {
+    UpdateProfile: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateProfileRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    UploadAvatar: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": {
+                    file: components["schemas"]["IFormFile"];
+                };
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ExportUserData: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    DeleteAccount: {
         parameters: {
             query?: never;
             header?: never;
@@ -901,9 +1041,9 @@ export interface operations {
     };
     GetMyPlanningPokerRooms: {
         parameters: {
-            query: {
-                Page: number;
-                PageSize: number;
+            query?: {
+                Page?: number;
+                PageSize?: number;
             };
             header?: never;
             path?: never;
@@ -917,7 +1057,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PagedResponseOfMyPlanningPokerRoomResponse"];
+                    "application/json": components["schemas"]["PagedResponseOfMyRoomResponse"];
                 };
             };
             /** @description Unauthorized */
@@ -1120,9 +1260,9 @@ export interface operations {
     };
     GetMyRetroRooms: {
         parameters: {
-            query: {
-                Page: number;
-                PageSize: number;
+            query?: {
+                Page?: number;
+                PageSize?: number;
             };
             header?: never;
             path?: never;
@@ -1136,7 +1276,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PagedResponseOfMyRetroRoomResponse"];
+                    "application/json": components["schemas"]["PagedResponseOfMyRoomResponse"];
                 };
             };
             /** @description Unauthorized */
@@ -1339,9 +1479,9 @@ export interface operations {
     };
     GetMyKanbanRooms: {
         parameters: {
-            query: {
-                Page: number;
-                PageSize: number;
+            query?: {
+                Page?: number;
+                PageSize?: number;
             };
             header?: never;
             path?: never;
@@ -1355,7 +1495,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PagedResponseOfMyKanbanRoomResponse"];
+                    "application/json": components["schemas"]["PagedResponseOfMyRoomResponse"];
                 };
             };
             /** @description Unauthorized */
@@ -1496,9 +1636,9 @@ export interface operations {
     };
     GetNotes: {
         parameters: {
-            query: {
-                Page: number;
-                PageSize: number;
+            query?: {
+                Page?: number;
+                PageSize?: number;
                 archived?: boolean;
             };
             header?: never;
@@ -1513,7 +1653,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PagedResponseOfNote"];
+                    "application/json": components["schemas"]["PagedResponseOfNoteDto"];
                 };
             };
             /** @description Unauthorized */
@@ -1546,7 +1686,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Note"];
+                    "application/json": components["schemas"]["NoteDto"];
                 };
             };
             /** @description Bad Request */
@@ -1590,7 +1730,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Note"];
+                    "application/json": components["schemas"]["NoteDto"];
                 };
             };
             /** @description Bad Request */
@@ -1677,7 +1817,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Note"];
+                    "application/json": components["schemas"]["NoteDto"];
                 };
             };
             /** @description Unauthorized */

@@ -1,6 +1,6 @@
 # SMTools
 
-[![CI](https://github.com/rivet92/SMTools/actions/workflows/ci.yml/badge.svg)](https://github.com/rivet92/SMTools/actions/workflows/ci.yml)
+[![CI](https://github.com/rivet92/SMTools/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/rivet92/SMTools/actions/workflows/ci.yml)
 [![Deploy](https://github.com/rivet92/SMTools/actions/workflows/deploy.yml/badge.svg)](https://github.com/rivet92/SMTools/actions/workflows/deploy.yml)
 [![codecov - backend](https://img.shields.io/codecov/c/github/rivet92/SMTools?flag=backend&label=backend)](https://codecov.io/gh/rivet92/SMTools)
 [![codecov - frontend](https://img.shields.io/codecov/c/github/rivet92/SMTools?flag=frontend&label=frontend)](https://codecov.io/gh/rivet92/SMTools)
