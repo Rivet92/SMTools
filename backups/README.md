@@ -34,17 +34,17 @@ Los avatares se almacenan en un volumen Docker (`smtools-avatars`) montado en
 ### 1. Generar par de claves GPG (en tu máquina local)
 
 ```bash
-gpg --batch --gen-key <<EOF
-Key-Type: RSA
-Key-Length: 4096
-Name-Real: SMTools Backup
-Name-Email: backup@smtools.test
-Expire-Date: 0
-Passphrase: <pon-una-passphrase-segura>
-EOF
+# Genera la clave interactivamente (te pedirá la passphrase dos veces).
+# El UID de la clave debe coincidir con GPG_RECIPIENT en backup.env.
+gpg --quick-gen-key "SMTools Backup <backup@smtools.dev>" rsa4096 sign 0
+
+# La clave principal solo firma/certifica: añade una subclave de cifrado
+# (obligatorio, backup.sh usa gpg --encrypt).
+# <FINGERPRINT> lo puedes ver con: gpg --list-secret-keys
+gpg --quick-add-key <FINGERPRINT> rsa4096 encr 0
 
 # Exportar clave pública (esta es la que subes al servidor)
-gpg --export --armor backup@smtools.test > backup-public.key
+gpg --export --armor backup@smtools.dev > backup-public.key
 ```
 
 Guarda la clave privada y la passphrase en un gestor de contraseñas.
@@ -65,7 +65,12 @@ scp backups/{backup.sh,restore.sh,.env.example} usuario@servidor:/opt/smtools/sc
 
 ```bash
 # Instalar dependencias
-sudo apt update && sudo apt install -y gpg awscli
+# NOTA: instala la AWS CLI v2 (https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html).
+# La v1 de apt no soporta --older-than que usa backup.sh.
+sudo apt update && sudo apt install -y gpg
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o /tmp/awscliv2.zip
+unzip /tmp/awscliv2.zip -d /tmp/aws && sudo /tmp/aws/aws/install
+sudo apt remove -y awscli   # evita que la v1 haga sombra a la v2
 
 # Importar clave pública
 sudo gpg --import /etc/smtools/backup-public.key
@@ -80,7 +85,7 @@ Ajusta al menos:
 | Variable | Valor |
 |----------|-------|
 | `POSTGRES_PASSWORD` | La password de tu base de datos |
-| `GPG_RECIPIENT` | `backup@smtools.test` (o el email/key ID que usaste) |
+| `GPG_RECIPIENT` | `backup@smtools.dev` (o el email/key ID que usaste) |
 | `SCW_ACCESS_KEY` | Access key de Scaleway IAM |
 | `SCW_SECRET_KEY` | Secret key de Scaleway IAM |
 | `SCW_BUCKET` | `smtools-backups` (o el nombre que hayas creado) |
@@ -154,7 +159,7 @@ PGPASSWORD=<db-password> /opt/smtools/scripts/restore.sh all \
   localhost smtools smtools smtools_app
 
 # Eliminar la clave privada del servidor
-gpg --delete-secret-keys backup@smtools.test
+gpg --delete-secret-keys backup@smtools.dev
 ```
 
 ## Preparación en Scaleway

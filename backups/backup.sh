@@ -9,6 +9,12 @@ if [ ! -f "$CONFIG" ]; then
 fi
 set -a; source "$CONFIG"; set +a
 
+# Map Scaleway IAM credentials to the AWS CLI env vars. backup.env defines
+# SCW_ACCESS_KEY/SCW_SECRET_KEY, but the AWS CLI reads AWS_ACCESS_KEY_ID and
+# AWS_SECRET_ACCESS_KEY. Allow explicit AWS_* overrides to win.
+export AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID:-$SCW_ACCESS_KEY}"
+export AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY:-$SCW_SECRET_KEY}"
+
 DATE=$(date +%Y%m%d_%H%M%S)
 BACKUP_DIR="/var/backups/smtools/daily"
 DB_FILE="smtools_db_${DATE}.sql.gz.gpg"
@@ -45,8 +51,9 @@ for attempt in 1 2 3; do
         --endpoint-url "$AWS_ENDPOINT_URL" >> "$LOG" 2>&1; then
         DB_RC=0
         break
+    else
+        DB_RC=$?
     fi
-    DB_RC=$?
     if [ $attempt -eq 3 ]; then
         echo "S3 upload failed after 3 attempts" >> "$LOG"
     fi
