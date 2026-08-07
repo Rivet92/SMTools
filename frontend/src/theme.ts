@@ -2,6 +2,12 @@ import { createTheme } from '@mui/material/styles';
 import type { Theme } from '@mui/material/styles';
 import type { ThemeMode } from './features/theme/store/themeStore';
 
+declare module '@mui/material/styles' {
+  interface BreakpointOverrides {
+    xxl: true;
+  }
+}
+
 const themeCache: Partial<Record<ThemeMode, Theme>> = {};
 
 export const getTheme = (mode: ThemeMode): Theme => {
@@ -9,6 +15,9 @@ export const getTheme = (mode: ThemeMode): Theme => {
     return themeCache[mode];
   }
   const theme = createTheme({
+    breakpoints: {
+      values: { xs: 0, sm: 600, md: 900, lg: 1200, xl: 1536, xxl: 1680 },
+    },
     palette: {
       mode,
       background: {

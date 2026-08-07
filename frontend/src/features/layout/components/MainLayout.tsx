@@ -11,7 +11,7 @@ export function MainLayout() {
 
   return (
     <Container
-      maxWidth="lg"
+      maxWidth="xxl"
       sx={{
         height: '100vh',
         display: 'flex',
