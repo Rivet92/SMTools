@@ -83,13 +83,28 @@ fi
 RC=$(( DB_RC | AV_RC ))
 
 # ---- Cleanup remote >30 days ----
+# NOTE: --older-than only exists on `aws s3 ls`, not `aws s3 rm`. List first,
+# then delete each object.
+cleanup_remote() {
+  local prefix="$1"
+  local cutoff="${RETENTION_DAYS:-30}"
+  local objects
+  objects="$(aws s3 ls "s3://${SCW_BUCKET}/${prefix}/" --recursive --older-than "$cutoff" \
+    --endpoint-url "$AWS_ENDPOINT_URL" 2>>"$LOG" || true)"
+  [ -z "$objects" ] && return 0
+  echo "$objects" \
+  | awk '{print $4}' \
+  | while IFS= read -r key; do
+      [ -z "$key" ] && continue
+      aws s3 rm "s3://${SCW_BUCKET}/${key}" \
+        --endpoint-url "$AWS_ENDPOINT_URL" >> "$LOG" 2>&1 \
+        || echo "[WARN] Remote cleanup: failed to delete $key" >> "$LOG"
+    done
+}
+
 echo "[$(date)] Cleaning remote backups older than 30 days..." >> "$LOG"
-aws s3 rm "s3://${SCW_BUCKET}/db/" --recursive \
-  --endpoint-url "$AWS_ENDPOINT_URL" \
-  --older-than 30 >> "$LOG" 2>&1 || echo "[WARN] Remote db cleanup failed" >> "$LOG"
-aws s3 rm "s3://${SCW_BUCKET}/avatars/" --recursive \
-  --endpoint-url "$AWS_ENDPOINT_URL" \
-  --older-than 30 >> "$LOG" 2>&1 || echo "[WARN] Remote avatars cleanup failed" >> "$LOG"
+cleanup_remote "db"
+cleanup_remote "avatars"
 
 # ---- Cleanup local >30 days ----
 DELETED=$(find "$BACKUP_DIR" -name "smtools_*.gpg" -mtime +30 -print -delete | wc -l)

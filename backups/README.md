@@ -172,8 +172,9 @@ gpg --delete-secret-keys backup@smtools.dev
    - **Days**: `30`
    - **Action**: `Delete`
    
-   El script de backup ya limpia los objetos >30 días con `aws s3 rm --older-than 30`,
-   pero la lifecycle rule actúa como salvaguarda si el script falla durante varios días.
+   El script de backup ya limpia los objetos >30 días (`aws s3 ls --older-than 30` +
+   `aws s3 rm`), pero la lifecycle rule actúa como salvaguarda si el script falla
+   durante varios días.
 
 ## Ficheros del proyecto
 
