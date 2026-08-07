@@ -5,7 +5,7 @@
 | Workflow | Evento | Descripción |
 |----------|--------|-------------|
 | `ci.yml` | PR a `main` | **Bloqueante.** Build, lint, formato, tests y verificación de contrato OpenAPI. |
-| `deploy.yml` | Push a `main` | Verificaciones → build Docker → push a GHCR → deploy automático al VPS. |
+| `deploy.yml` | Push a `main` (+ `workflow_dispatch`) | Build Docker → push a GHCR (tag inmutable `sha-<short>`) → deploy automático al VPS con `deploy.sh`. |
 | `e2e.yml` | Push/PR a `main` | Tests E2E con Playwright + PostgreSQL. |
 
 ### Badges de cobertura
@@ -37,7 +37,7 @@ sudo chown $USER:$USER /opt/smtools
 Desde tu máquina local, copia los archivos de despliegue:
 
 ```bash
-scp deploy/docker-compose.yml deploy/.env.example usuario@vps:/opt/smtools/
+scp deploy/docker-compose.yml deploy/.env.example deploy/deploy.sh deploy/rollback.sh deploy/status.sh usuario@vps:/opt/smtools/
 ```
 
 Luego en el VPS:
@@ -46,11 +46,15 @@ Luego en el VPS:
 ssh usuario@vps
 cd /opt/smtools
 cp .env.example .env
+chmod 755 deploy.sh rollback.sh status.sh
+chmod 600 .env
 ```
 
 Edita `/opt/smtools/.env` con tus valores reales (dominio, OAuth, contraseñas de PostgreSQL).
 
 > **IMPORTANTE:** El `docker-compose.yml` de producción expone la app solo en `127.0.0.1:8080`. Necesitarás un **proxy inverso** (nginx, Caddy, Traefik) para servirla en tu dominio con HTTPS. Ver [Proxy inverso](#proxy-inverso) más abajo.
+
+Los ficheros `.tag` y `.tag.previous` los crea `deploy.sh` automáticamente en el primer deploy — **no hace falta crearlos a mano**.
 
 ### Configurar secrets en GitHub
 
@@ -107,18 +111,32 @@ El workflow `deploy.yml` necesita credenciales para conectarse al VPS. Ve a `Set
 
 Cada push a `main` ejecuta el workflow `deploy.yml`:
 
-1. **`verify-backend`** y **`verify-frontend`** en paralelo — build, lint, formato, tests.
-2. **`build-and-push`** (tras verificación) — Construye la imagen Docker con BuildKit y la sube a `ghcr.io/<repo>:latest` y `:<sha>`. También escanea vulnerabilidades con Trivy y las reporta a GitHub Security.
-3. **`deploy`** — Se conecta por SSH al VPS y ejecuta:
+1. **`build-and-push`** — Construye la imagen Docker con BuildKit y la sube a `ghcr.io/rivet92/smtools:sha-<short>` (inmutable) y `:latest` (solo conveniencia, nunca se despliega por ella). La imagen lleva el label `org.opencontainers.image.revision` con el SHA completo. Escanea vulnerabilidades con Trivy y las reporta a GitHub Security.
+2. **`deploy`** — Se conecta por SSH al VPS y ejecuta `./deploy.sh <short-sha>`, que:
 
    ```bash
-   cd /opt/smtools
+   # deploy.sh (copia local: deploy/deploy.sh)
    docker compose pull app
-   docker compose up -d --force-recreate app
-   docker image prune -af --filter "until=24h"
+   IMAGE_TAG="sha-<short>" docker compose up -d app
+   # espera hasta ~2.5 min a que el contenedor esté "healthy"
+   # si falla: rollback automático a .tag.previous y salida con error
    ```
 
-   Tras el despliegue, espera hasta 2 minutos a que el health check de la app responda. Si falla, hace **rollback automático** a la imagen anterior.
+   Tras el deploy, `.tag` guarda el SHA desplegado y `.tag.previous` el anterior.
+
+**Estado desplegado (qué versión corre exactamente):**
+
+```bash
+ssh usuario@vps
+cd /opt/smtools
+./status.sh
+# tag file:        sha-abc12345
+# previous tag:    sha-abc12344
+# container image: ghcr.io/rivet92/smtools:sha-abc12345
+# commit revision: <sha completo del commit>
+# health:          healthy
+# restarts:        0
+```
 
 **Rollback manual:**
 
@@ -126,10 +144,12 @@ Cada push a `main` ejecuta el workflow `deploy.yml`:
 ssh usuario@vps
 cd /opt/smtools
 docker compose logs --tail=50 app   # diagnosticar
-docker compose stop app
-docker tag ghcr.io/<repo>:<sha-anterior> ghcr.io/<repo>:latest
-docker compose up -d --force-recreate app
+./rollback.sh                       # vuelve a .tag.previous
+# o a un commit cualquiera:
+./deploy.sh <short-sha>
 ```
+
+También puedes re-desplegar cualquier SHA desde GitHub: `Actions → Deploy to VPS → Run workflow`, rellenando `ref` con el SHA o tag deseado.
 
 ### Proxy inverso
 

@@ -259,18 +259,25 @@ For coverage: `pnpm test:coverage` produces a combined report (backend + fronten
 
 | Workflow | Trigger | Actions |
 |---|---|---|
-| `ci.yml` | Pull request | Build backend + frontend, lint, format check, typecheck, all tests, code coverage, OpenAPI contract check |
-| `deploy.yml` | Push to `main` | Verify, build Docker image, push to GHCR, deploy to VPS |
-| `e2e.yml` | Push / PR | E2E tests with real PostgreSQL service |
+| `ci.yml` | Push a `feature/**`/`hotfix/**` + Pull request a `main` | Orchestrator: calls `verify-backend`, `verify-frontend`, `contract` (all reusable). All three are required checks for merging. |
+| `verify-backend.yml` | `workflow_call` (reusable) | Restore, build, NuGet vuln check, format, tests with coverage |
+| `verify-frontend.yml` | `workflow_call` (reusable) | Install, `pnpm audit`, lint, format check, typecheck, tests, coverage, build |
+| `contract.yml` | `workflow_call` (reusable) | Dump OpenAPI, regenerate `api.ts`, fail on drift vs snapshot + types |
+| `e2e.yml` | Pull request a `main` (+ manual dispatch) | E2E tests with real PostgreSQL service. Required check for merging. |
+| `codeql.yml` | Push a `main`/`feature/**`/`hotfix/**` + PR a `main` | CodeQL analysis (C# + TS). Informational, not a required check. |
+| `deploy.yml` | Push to `main` + manual dispatch (`workflow_dispatch` with optional `ref` for redeploy/rollback) | Build Docker image tagged `sha-<short>` + `latest`, push to GHCR, scan with Trivy, deploy to VPS via `deploy/deploy.sh` (no re-verification: main is already gated by CI) |
+
+All CI workflows use `concurrency` groups with `cancel-in-progress: true` (except `deploy.yml`, which prevents parallel deploys). Branch protection on `main` requires the CI checks to pass before merging.
 
 ---
 
 ## Deployment
 
 - **Production**: backend serves the frontend SPA from `wwwroot/`. The Dockerfile copies `frontend/dist` into `backend/wwwroot` and builds a single container image.
-- **Production compose**: `deploy/docker-compose.yml` includes health checks and an avatars volume.
+- **Production compose**: `deploy/docker-compose.yml` includes health checks and an avatars volume. The `app` service uses `image: ghcr.io/rivet92/smtools:${IMAGE_TAG:-latest}` — deploys are versioned by immutable `sha-<short>` tags, never `latest`.
+- **Deploy state on the VPS** (`/opt/smtools`): `deploy/deploy.sh`, `deploy/rollback.sh`, `deploy/status.sh` are copied to the server. `deploy.sh <short-sha>` pulls + recreates the container, waits for a `healthy` status, and auto-rolls back to `.tag.previous` on failure. State files: `.tag` (current deployed sha) and `.tag.previous` (previous). The image carries the `org.opencontainers.image.revision` label with the full commit SHA — `status.sh` prints exactly what is running.
 - **Backup scripts**: `backups/backup.sh` and `backups/restore.sh` for PostgreSQL. Configuration via `backups/.env.example`.
-- **Production env vars**: `deploy/.env.example` provides the template.
+- **Production env vars**: `deploy/.env.example` provides the template (secrets live in the server's `.env`, never in GH Actions).
 
 ---
 

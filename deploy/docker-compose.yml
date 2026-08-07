@@ -1,15 +1,16 @@
 # docker-compose.yml for production deployment
 # Copy this file to your server as docker-compose.yml.
 #
-# For CI/CD (GHCR): replace smtools:latest with your GHCR image
-#   ghcr.io/your-username/smtools:latest
+# Deploys are versioned by immutable image tags (sha-<short>). deploy.sh on the
+# server passes IMAGE_TAG as an env var, so this file never depends on `latest`.
+# Plain `docker compose up -d` without IMAGE_TAG falls back to latest for manual use.
 #
 # The app port is bound to 127.0.0.1 only — your reverse proxy
 # (nginx, Caddy, etc.) should connect to localhost:8080.
 
 services:
   app:
-    image: ghcr.io/rivet92/smtools:latest
+    image: ghcr.io/rivet92/smtools:${IMAGE_TAG:-latest}
     container_name: smtools-app
     restart: unless-stopped
     ports:
