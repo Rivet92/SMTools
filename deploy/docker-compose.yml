@@ -25,6 +25,9 @@ services:
       AUTHENTICATION__GITHUB__CLIENTSECRET: ${AUTHENTICATION__GITHUB__CLIENTSECRET}
       PORT: ${PORT}
       FRONTEND_ORIGIN: ${FRONTEND_ORIGIN}
+      LEGAL_OWNER: ${LEGAL_OWNER:-SMTools}
+      LEGAL_EMAIL: ${LEGAL_EMAIL:-admin@example.com}
+      SHOW_DISCLAIMER: ${SHOW_DISCLAIMER:-true}
     volumes:
       - smtools-avatars:/app/wwwroot/avatars
     depends_on:
