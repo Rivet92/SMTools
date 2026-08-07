@@ -259,7 +259,7 @@ For coverage: `pnpm test:coverage` produces a combined report (backend + fronten
 
 | Workflow | Trigger | Actions |
 |---|---|---|
-| `ci.yml` | Push a `feature/**`/`hotfix/**` + Pull request a `main` | Orchestrator: calls `verify-backend`, `verify-frontend`, `contract` (all reusable). All three are required checks for merging. |
+| `ci.yml` | Push a `main`/`feature/**`/`hotfix/**` + Pull request a `main` + `workflow_dispatch` (manual) | Orchestrator: calls `verify-backend`, `verify-frontend`, `contract` (all reusable). All three are required checks for merging. |
 | `verify-backend.yml` | `workflow_call` (reusable) | Restore, build, NuGet vuln check, format, tests with coverage |
 | `verify-frontend.yml` | `workflow_call` (reusable) | Install, `pnpm audit`, lint, format check, typecheck, tests, coverage, build |
 | `contract.yml` | `workflow_call` (reusable) | Dump OpenAPI, regenerate `api.ts`, fail on drift vs snapshot + types |
