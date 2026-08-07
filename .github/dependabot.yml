@@ -1,11 +1,15 @@
 version: 2
+# Informational mode: Dependabot only surfaces available updates in the
+# "Dependabot updates" tab (open-pull-requests-limit: 0 means no PRs are opened).
+# Version bumps are done manually on a feature/update-dependencies branch to
+# exercise the full CI/E2E flow before merging to main.
 updates:
   - package-ecosystem: "npm"
     directory: "/frontend"
     schedule:
       interval: "weekly"
       day: "monday"
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 0
     labels:
       - "dependencies"
       - "frontend"
@@ -48,7 +52,7 @@ updates:
     schedule:
       interval: "weekly"
       day: "monday"
-    open-pull-requests-limit: 3
+    open-pull-requests-limit: 0
     labels:
       - "dependencies"
       - "root"
@@ -99,7 +103,7 @@ updates:
     schedule:
       interval: "weekly"
       day: "monday"
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 0
     labels:
       - "dependencies"
       - "backend"
@@ -112,6 +116,7 @@ updates:
     schedule:
       interval: "weekly"
       day: "monday"
+    open-pull-requests-limit: 0
     labels:
       - "dependencies"
       - "docker"
@@ -123,6 +128,7 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
+    open-pull-requests-limit: 0
     labels:
       - "dependencies"
       - "ci"
