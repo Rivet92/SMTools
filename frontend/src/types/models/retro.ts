@@ -4,7 +4,7 @@ export type RetroColumn = components['schemas']['RetroColumnDto'];
 
 export type RetroTemplate = components['schemas']['RetroTemplateResponse'];
 
-export type RetroParticipant = components['schemas']['RetroParticipantDto'];
+export type RetroParticipant = components['schemas']['ParticipantDto'];
 
 export type RetroCard = components['schemas']['RetroCardDto'];
 
@@ -14,7 +14,7 @@ export type RetroActionItem = components['schemas']['RetroActionItemDto'];
 
 export type RetroRoom = components['schemas']['RetroRoomResponse'];
 
-export type MyRetroRoom = components['schemas']['MyRetroRoomResponse'];
+export type MyRetroRoom = components['schemas']['MyRoomResponse'];
 
 export const PHASES = ['Gathering', 'Grouping', 'Voting', 'Actions'] as const;
 

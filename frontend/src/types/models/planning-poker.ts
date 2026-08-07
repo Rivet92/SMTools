@@ -6,7 +6,7 @@ export type PlanningPokerDeck = components['schemas']['PlanningPokerDeckDto'];
 
 export type PlanningPokerRoom = components['schemas']['PlanningPokerRoomResponse'];
 
-export type MyPlanningPokerRoom = components['schemas']['MyPlanningPokerRoomResponse'];
+export type MyPlanningPokerRoom = components['schemas']['MyRoomResponse'];
 
 export type RoomState = components['schemas']['RoomStateDto'] & { version: number };
 
