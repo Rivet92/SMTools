@@ -11,7 +11,7 @@ Cron (00:00)
   │                                     ├── local (retención 90 días, purge automático)
   │                                     └── aws s3 cp ──▶ s3://bucket/db/
   │
-  └── docker exec smtools_app tar ──▶ gzip ──▶ gpg ──▶ /var/backups/smtools/daily/smtools_avatars_<date>.tar.gz.gpg
+  └── docker exec smtools tar ──▶ gzip ──▶ gpg ──▶ /var/backups/smtools/daily/smtools_avatars_<date>.tar.gz.gpg
                                                 ├── local (retención 90 días, purge automático)
                                                 └── aws s3 cp ──▶ s3://bucket/avatars/
 ```
@@ -135,7 +135,7 @@ GPG te pedirá la passphrase de la clave privada.
 ```bash
 ./backups/restore.sh avatars \
   smtools_avatars_20260720_030000.tar.gz.gpg \
-  smtools_app
+  smtools
 ```
 
 ### Restaurar todo (mismo snapshot)
@@ -143,7 +143,7 @@ GPG te pedirá la passphrase de la clave privada.
 ```bash
 PGPASSWORD=<db-password> ./backups/restore.sh all \
   smtools_20260720_030000 \
-  db-host smtools smtools smtools_app
+  db-host smtools smtools smtools
 ```
 
 ### Desde el servidor (solo si llevas la clave privada)
@@ -155,7 +155,7 @@ gpg --import backup-private.key
 # Restaurar
 PGPASSWORD=<db-password> /opt/smtools/scripts/restore.sh all \
   /var/backups/smtools/daily/smtools_20260720_030000 \
-  localhost smtools smtools smtools_app
+  localhost smtools smtools smtools
 
 # Eliminar la clave privada del servidor
 gpg --delete-secret-keys backup@smtools.dev

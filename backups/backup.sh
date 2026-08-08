@@ -61,7 +61,7 @@ for attempt in 1 2 3; do
 done
 
 # ---- Avatars ----
-AVATAR_CONTAINER="${AVATAR_CONTAINER:-smtools-app}"
+AVATAR_CONTAINER="${AVATAR_CONTAINER:-smtools}"
 AVATAR_DIR="${AVATAR_DIR:-/app/wwwroot/avatars}"
 AV_RC=0
 

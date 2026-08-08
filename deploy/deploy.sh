@@ -14,7 +14,7 @@ set -euo pipefail
 
 TAG="sha-${1:?usage: deploy.sh <short-sha>}"
 BASE_DIR="/opt/smtools"
-CONTAINER="smtools-app"
+CONTAINER="smtools"
 TIMEOUT_LOOPS=30
 SLEEP_SECS=5
 

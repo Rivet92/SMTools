@@ -28,7 +28,7 @@ case "$MODE" in
 
   avatars)
     BACKUP_FILE="${1:?Usage: $0 avatars <file> [container]}"
-    CONTAINER="${2:-smtools_app}"
+    CONTAINER="${2:-smtools}"
 
     gpg --decrypt "$BACKUP_FILE" |
       docker exec -i "$CONTAINER" tar xzf - -C /app/wwwroot
