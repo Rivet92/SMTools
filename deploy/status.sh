@@ -5,7 +5,7 @@
 set -euo pipefail
 
 cd /opt/smtools
-CONTAINER="smtools-app"
+CONTAINER="smtools"
 
 echo "tag file:        $(cat .tag 2>/dev/null || echo none)"
 echo "previous tag:    $(cat .tag.previous 2>/dev/null || echo none)"
