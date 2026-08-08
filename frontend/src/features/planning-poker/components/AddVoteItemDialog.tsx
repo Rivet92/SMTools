@@ -43,7 +43,7 @@ export function AddVoteItemDialog({
       await onSubmit(trimmed);
       handleClose();
     } catch {
-      // El error ya se maneja en el hook padre (actionError)
+      // The error is already handled by the parent hook (actionError)
     } finally {
       setIsSubmitting(false);
     }

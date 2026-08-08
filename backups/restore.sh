@@ -1,11 +1,11 @@
 #!/bin/bash
 set -euo pipefail
-# Uso:
+# Usage:
 #   ./backups/restore.sh db     <backup.sql.gz.gpg>  [db-host] [db-name] [db-user]
 #   ./backups/restore.sh avatars <backup.tar.gz.gpg> [container]
 #   ./backups/restore.sh all    <prefix>             [db-host] [db-name] [db-user] [container]
 #
-# Ejemplos:
+# Examples:
 #   PGPASSWORD=xxx ./backups/restore.sh db smtools_db_20260720_030000.sql.gz.gpg
 #   ./backups/restore.sh avatars smtools_avatars_20260720_030000.tar.gz.gpg
 #   PGPASSWORD=xxx ./backups/restore.sh all smtools_20260720_030000
@@ -38,7 +38,7 @@ case "$MODE" in
     PREFIX="${1:?Usage: $0 all <prefix> [db-host] [db-name] [db-user] [container]}"
     shift
 
-    # Reusa el resto de args: db-host db-name db-user container
+    # Reuse the remaining args: db-host db-name db-user container
     "$0" db "${PREFIX}_db_*.sql.gz.gpg" "$@"
     "$0" avatars "${PREFIX}_avatars_*.tar.gz.gpg" "${@:4}"
     ;;

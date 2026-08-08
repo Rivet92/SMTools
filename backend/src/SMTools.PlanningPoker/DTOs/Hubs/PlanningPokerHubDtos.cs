@@ -21,7 +21,7 @@ public sealed record RoomStateDto(
     public int Version { get; set; }
 }
 
-// Delta payloads para broadcasts optimizados
+// Delta payloads for optimized broadcasts
 public sealed record VoteUpdatePayload(Guid VoteItemId, int Version);
 
 public sealed record VoteRevealedPayload(Guid VoteItemId, int Version);
@@ -36,6 +36,6 @@ public sealed record VoteHiddenPayload(Guid VoteItemId, int Version);
 
 public sealed record FocusVoteItemPayload(Guid VoteItemId, int Version);
 
-// Result wrapper para Vote: permite al cliente descartar respuestas tardías
-// comparando la versión con la que ya tenga del broadcast VoteUpdated.
+// Result wrapper for Vote: lets the client discard late responses by comparing
+// the version against the one it already has from the VoteUpdated broadcast.
 public sealed record VoteResult(RoomStateDto State);

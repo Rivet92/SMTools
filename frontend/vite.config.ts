@@ -90,7 +90,7 @@ export default defineConfig(({ mode }) => {
         },
         output: {
           manualChunks(id) {
-            // Features "core" que se cargan en el entry: no las separamos.
+            // Core features loaded in the entry chunk: we do not split them.
             const coreFeatures = new Set([
               'auth',
               'error',
@@ -112,11 +112,11 @@ export default defineConfig(({ mode }) => {
 
             if (!id.includes('node_modules')) return;
 
-            // Vendors muy grandes y estables: separarlos mejora el cacheo.
+            // Large, stable vendors: splitting them improves caching.
             if (id.includes('react-dom') || id.includes('scheduler')) return 'react-dom';
             if (id.includes('@mui/') || id.includes('@emotion/')) return 'mui';
 
-            // Resto de dependencias en un unico chunk de vendor.
+            // Remaining dependencies in a single vendor chunk.
             return 'vendor';
           },
         },
