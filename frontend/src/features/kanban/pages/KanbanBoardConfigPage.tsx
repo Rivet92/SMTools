@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
-import { Box, Button, IconButton, Typography } from '@mui/material';
+import { Box, IconButton, Tooltip, Typography } from '@mui/material';
 
 import { IconEdit, IconEye, IconPlus } from '@tabler/icons-react';
 import { PageHead } from '../../../components/seo/PageHead';
@@ -124,15 +124,15 @@ export function KanbanBoardConfigPage() {
           backAriaLabel={t('kanban.aria.back')}
           variant="h6"
         >
-          <Button
-            variant="contained"
-            size="small"
-            onClick={handleAddEmptyColumn}
-            startIcon={<IconPlus size={16} />}
-            sx={{ fontSize: '0.75rem' }}
-          >
-            {t('kanban.addColumn')}
-          </Button>
+          <Tooltip title={t('kanban.addColumn')}>
+            <IconButton
+              size="small"
+              onClick={handleAddEmptyColumn}
+              aria-label={t('kanban.addColumn')}
+            >
+              <IconPlus size={20} />
+            </IconButton>
+          </Tooltip>
         </PageHeader>
 
         <Box sx={{ flex: 1, overflow: 'hidden', display: 'flex' }}>
